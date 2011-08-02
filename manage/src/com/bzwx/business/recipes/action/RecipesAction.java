@@ -1,28 +1,15 @@
 package com.bzwx.business.recipes.action;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
@@ -55,13 +42,12 @@ public class RecipesAction extends Struts2BaseAction {
 	private static final long serialVersionUID = 1L;
 	@Autowired
 	private RecipesService recipesService;
-
+	
 	HttpServletRequest request = ServletActionContext.getRequest();
 	HttpServletResponse response = ServletActionContext.getResponse();
 	// HttpSession session = ServletActionContext.getRequest().getSession();
 
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
 	private List<Recipes> list = null;
 	private List<Recipes> pageList = null;
 	private Recipes recipes = null;
@@ -72,7 +58,6 @@ public class RecipesAction extends Struts2BaseAction {
 	 * @return
 	 * @throws UnsupportedEncodingException
 	 */
-
 	@Action(value = "pageQuery", results = { @Result(name = "recipesList", location = "/admin/recipes/recipesList.jsp") })
 	@JSON(serialize = false)
 	public String pageQuery() throws UnsupportedEncodingException {
@@ -115,8 +100,7 @@ public class RecipesAction extends Struts2BaseAction {
 	}
 
 	/**
-	 * 条件查询 菜品信息 （菜品更新接口 recStatus=0）
-	 * 
+	 * 条件查询 菜品信息 （更新 recStatus=0）
 	 * @return
 	 * @throws Exception
 	 */
@@ -184,41 +168,42 @@ public class RecipesAction extends Struts2BaseAction {
 		return recipes;
 	}
 	
-	private File image;
-	private String imageFileName;
-	
-	public String getImageFileName() {
-		return imageFileName;
-	}
-
-	public void setImageFileName(String imageFileName) {
-		this.imageFileName = imageFileName;
-	}
-
-	public File getImage() {
-		return image;
-	}
-
-	public void setImage(File image) {
-		this.image = image;
-	}
-
-	public String addUI(){
-		return "success";
-	}
-
-	public String upload() throws Exception{
-		
-		String realpath = ServletActionContext.getServletContext().getRealPath("/images");
-		System.out.println(realpath);
-		if(image!=null){
-			File savefile = new File(new File(realpath), imageFileName);
-			if(!savefile.getParentFile().exists()) savefile.getParentFile().mkdirs();
-			FileUtils.copyFile(image, savefile);
-			ActionContext.getContext().put("message", "上传成功");
-		}
-		return "success";
-	}
+	// private File image;
+	// private String imageFileName;
+	//
+	// public String getImageFileName() {
+	// return imageFileName;
+	// }
+	//
+	// public void setImageFileName(String imageFileName) {
+	// this.imageFileName = imageFileName;
+	// }
+	//
+	// public File getImage() {
+	// return image;
+	// }
+	//
+	// public void setImage(File image) {
+	// this.image = image;
+	// }
+	//
+	// public String addUI(){
+	// return "success";
+	// }
+	//
+	// public String upload() throws Exception{
+	//
+	// String realpath =
+	// ServletActionContext.getServletContext().getRealPath("/images");
+	// System.out.println(realpath);
+	// if(image!=null){
+	// File savefile = new File(new File(realpath), imageFileName);
+	// if(!savefile.getParentFile().exists()) savefile.getParentFile().mkdirs();
+	// FileUtils.copyFile(image, savefile);
+	// ActionContext.getContext().put("message", "上传成功");
+	// }
+	// return "success";
+	// }
 
 	// @Action(value = "insertOrUpdate2", results = { @Result(name =
 	// "recipesManage", location = "/admin/recipes/recipesManage.jsp") })

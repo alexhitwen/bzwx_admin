@@ -12,7 +12,8 @@
 
 
 	<package name="fileUploadDemo" extends="struts-default">
-		<action name="fileUpload" class="com.bzwx.business.recipes.action.UploadRecipesAction">
+		<action name="fileUpload"
+			class="com.bzwx.business.recipes.action.UploadRecipesAction">
 			<interceptor-ref name="fileUploadStack" />
 			<result name="success">/admin/recipes/recipesManage.jsp</result>
 		</action>
