@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bzwx.business.category.pojo.Category">
+
+	<insert id="insert" parameterType="Category">
+		insert into
+		BZWX_BUSI_RECIPES_CATEGORY
+		(cate_id,parent_id,cate_name,cate_code,cate_value,cate_note,cate_desc,sort_flag,cate_status)
+		values
+		(S_BZWX_BUSI_CATEGORY_INFO.NEXTVAL,#{parentId},#{cateName},#{cateCode},#{cateValue},#{cateNote},#{cateDesc},#{sortFlag},#{cateStatus})
+	</insert>
+	<delete id="delete">
+		delete BZWX_BUSI_RECIPES_CATEGORY
+		where cate_id =
+		#{cate_id}
+	</delete>
+	<update id="update" parameterType="Category">
+		update
+		BZWX_BUSI_RECIPES_CATEGORY
+		set
+		parent_id = #{parentId},
+		cate_name =
+		#{cateName},
+		cate_code = #{cateCode},
+		cate_value = #{cateValue},
+		cate_note =
+		#{cateNote},
+		cate_desc = #{cateDesc},
+		sort_flag =
+		#{sortFlag},
+		cate_status =
+		#{cateStatus}
+		where cate_id = #{cateId}
+	</update>
+	<select id="getInfobyId" parameterType="long" resultType="Category">
+		select
+		cate_id as
+		cateId,parent_id as parentId,
+		cate_name as
+		cateName,cate_code
+		as
+		cateCode,
+		cate_value as cateValue,cate_note
+		as cateNote,cate_desc
+		as
+		cateDesc,
+		sort_flag as
+		sortFlag,cate_status as cateStatus
+		from
+		BZWX_BUSI_RECIPES_CATEGORY
+		where cate_id = #{cateId}
+	</select>
+	<select id="getCategoryById" parameterType="int" resultType="Category">
+		select cate_id as
+		cateId,parent_id as parentId,
+		cate_name as
+		cateName,cate_code as
+		cateCode,
+		cate_value as cateValue,cate_note
+		as
+		cateNote,cate_desc
+		as
+		cateDesc,
+		sort_flag as
+		sortFlag,cate_status as
+		cateStatus
+		from
+		BZWX_BUSI_RECIPES_CATEGORY
+		where cate_id = #{cateId}
+	</select>
+	<select id="getAllList" resultType="Category">
+		select cate_id as
+		cateId,parent_id as parentId,
+		cate_name as cateName,cate_code as
+		cateCode,
+		cate_value as cateValue,cate_note as cateNote,cate_desc
+		as
+		cateDesc,
+		sort_flag as sortFlag,cate_status as cateStatus
+		FROM
+		BZWX_BUSI_RECIPES_CATEGORY
+		order by sort_flag
+	</select>
+	<select id="getListByValue" resultType="Category">
+		select cate_id
+		as
+		cateId,parent_id as parentId,
+		cate_name as
+		cateName,cate_code as
+		cateCode,
+		cate_value as cateValue,cate_note
+		as cateNote,cate_desc
+		as
+		cateDesc,
+		sort_flag as
+		sortFlag,cate_status as cateStatus
+		from
+		BZWX_BUSI_RECIPES_CATEGORY
+		where #{sql}
+		order by sort_flag
+	</select>
+	<select id="getChildListByParentId" resultType="Category">
+		select cate_id
+		as
+		cateId,parent_id as parentId,
+		cate_name as
+		cateName,cate_code as
+		cateCode,
+		cate_value as cateValue,cate_note
+		as cateNote,cate_desc
+		as
+		cateDesc,
+		sort_flag as
+		sortFlag,cate_status as cateStatus
+		from
+		BZWX_BUSI_RECIPES_CATEGORY
+		where parent_id=#{cateId}
+		order by sort_flag
+	</select>
+	<select id="getListByParentId" resultType="Category">
+		select cate_id
+		as
+		cateId,parent_id as parentId,
+		cate_name as
+		cateName,cate_code as
+		cateCode,
+		cate_value as cateValue,cate_note
+		as cateNote,cate_desc
+		as
+		cateDesc,
+		sort_flag as
+		sortFlag,cate_status as cateStatus
+		from
+		BZWX_BUSI_RECIPES_CATEGORY
+		where cate_id = #{parentId}
+		order by
+		sort_flag
+	</select>
+
+
+
+</mapper>

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bzwx.business.recipes.pojo.Recipes">
+
+	<!-- 仅返回需要的字段Map - RecipesMapLite <resultMap id="RecipesMapLite" class="Recipes"> 
+		<result column="REC_ID" property="recId" /> <result column="CATE_NAME" property="cateName" 
+		/> <result column="REC_NAME" property="recName" /> <result column="REC_CODE" 
+		property="recCode" /> <result column="REC_PRICE" property="recPrice" /> <result 
+		column="REC_DISCOUNT_PRICE" property="recDiscountPrice" /> <result column="REC_PIC_URL" 
+		property="recPicUrl" /> <result column="REC_NOTE" property="recNote" /> <result 
+		column="REC_DESC" property="recDesc" /> <result column="CUISINE_NAME" property="cuisineName" 
+		/> <result column="IS_RECOMMEND" property="isRecommend" /> <result column="IS_DISCOUNT" 
+		property="isDiscount" /> <result column="SORT_FLAG" property="sortFlag" /> 
+		<result column="REC_SYNCHRONIZED_FLAG" property="recSynchronizedFlag" /> 
+		<result column="REC_VERSION" property="recVersion" /> <result column="REC_STATUS" 
+		property="recStatus" /> </resultMap> -->
+	<!-- 多对一映射 -->
+	<!-- <resultMap type="Emp" id="empMap"> <id property="id" column="empno" 
+		/> <result property="name" column="ename" /> <result property="salary" column="sal" 
+		/> <result property="startDate" column="startDate" javaType="java.util.Date" 
+		/> <association property="dept" column="deptno" select="getDeptById"/> </resultMap> -->
+	<!-- <select id="getListForClinet" resultMap="RecipesMapLite"> </select> -->
+	<!-- 全字段Map - RecipesMap -->
+	<resultMap id="RecipesMap" type="recipes">
+		<result column="REC_ID" property="recId" />
+		<result column="REC_NAME" property="recName" />
+		<result column="REC_CODE" property="recCode" />
+		<result column="REC_PRICE" property="recPrice" />
+		<result column="REC_DISCOUNT_PRICE" property="recDiscountPrice" />
+		<result column="REC_PIC_URL" property="recPicUrl" />
+		<result column="REC_NOTE" property="recNote" />
+		<result column="REC_DESC" property="recDesc" />
+		<result column="SORT_FLAG" property="sortFlag" />
+		<result column="REC_VERSION" property="recVersion" />
+		<result column="REC_STATUS" property="recStatus" />
+		<result column="CREATE_DATE" property="creataDate" />
+		<result column="UPDATE_DATE" property="updateDate" />
+	</resultMap>
+
+	<insert id="insert" parameterType="Recipes">
+		insert into
+		bzwx_busi_recipes_info
+		(REC_ID,REC_NAME,REC_CODE,REC_PRICE,REC_DISCOUNT_PRICE,REC_PIC_URL,REC_NOTE,REC_DESC,
+		SORT_FLAG,REC_VERSION,REC_STATUS,CREATE_DATE,UPDATE_DATE)
+		values
+		(S_BZWX_BUSI_RECIPES_INFO.NEXTVAL,
+		#{recName},#{recCode},#{recPrice},#{recDiscountPrice},#{recPicUrl},#{recNote},#{recDesc},
+		#{sortFlag},#{recVersion},#{recStatus},#{creataDate},#{updateDate})
+	</insert>
+
+	<update id="update" parameterType="Recipes">
+		update bzwx_busi_recipes_info
+		<set>
+			<if test="recName!=null">
+				REC_NAME=#{recName},
+			</if>
+			<if test="recCode!=null">
+				REC_CODE=#{recCode},
+			</if>
+			<if test="recPrice!=null">
+				REC_PRICE=#{recPrice},
+			</if>
+			<if test="recDiscountPrice!=null">
+				REC_DISCOUNT_PRICE=#{recDiscountPrice},
+			</if>
+			<if test="recPicUrl!=null">
+				REC_PIC_URL=#{recPicUrl},
+			</if>
+			<if test="recPicUrl!=null">
+				REC_PIC_URL=#{recPicUrl},
+			</if>
+			<if test="recNote!=null">
+				REC_NOTE=#{recNote},
+			</if>
+			<if test="recDesc!=null">
+				REC_DESC=#{recDesc},
+			</if>
+			<if test="sortFlag!=null">
+				SORT_FLAG=#{sortFlag},
+			</if>
+			<if test="sortFlag!=null">
+				SORT_FLAG=#{sortFlag},
+			</if>
+			<if test="creataDate!=null">
+				CREATE_DATE=#{creataDate},
+			</if>
+			<if test="updateDate!=null">
+				UPDATE_DATE=#{updateDate},
+			</if>
+		</set>
+		where REC_ID=#{recId}
+	</update>
+
+	<delete id="delete" parameterType="Long">
+		delete
+		bzwx_busi_recipes_info
+		where
+		<if test="recId!=null">
+			REC_ID = #{recId}
+		</if>
+		<if test="recId==null">
+			1 = 0
+		</if>
+	</delete>
+
+	<delete id="deleteByIds" parameterType="String">
+		delete
+		bzwx_busi_recipes_info
+		where
+		<if test="recId!=null">
+			REC_ID = #{recId}
+		</if>
+		<if test="recId==null">
+			1 = 0
+		</if>
+	</delete>
+
+	<!-- 使用隐射关系时一定要返回隐射Map，否则自己组拼对象返回 -->
+	<select id="getInfoById" parameterType="Long" resultMap="RecipesMap">
+		select
+		REC_ID,REC_NAME,REC_CODE,REC_PRICE,REC_DISCOUNT_PRICE,REC_PIC_URL,REC_NOTE,REC_DESC,
+		SORT_FLAG,REC_VERSION,REC_STATUS,CREATE_DATE,UPDATE_DATE
+		from
+		bzwx_busi_recipes_info
+		where REC_ID = #{recId}
+	</select>
+
+	<select id="getAllList" resultMap="RecipesMap">
+		select
+		REC_ID,REC_NAME,REC_CODE,REC_PRICE,REC_DISCOUNT_PRICE,REC_PIC_URL,REC_NOTE,REC_DESC,
+		SORT_FLAG,REC_VERSION,REC_STATUS,CREATE_DATE,UPDATE_DATE
+		from
+		bzwx_busi_recipes_info
+		order by SORT_FLAG desc
+	</select>
+
+	<select id="getListByMap" parameterType="map" resultMap="RecipesMap">
+		select
+		REC_ID,REC_NAME,REC_CODE,REC_PRICE,REC_DISCOUNT_PRICE,REC_PIC_URL,REC_NOTE,REC_DESC,
+		SORT_FLAG,REC_VERSION,REC_STATUS,CREATE_DATE,UPDATE_DATE
+		from
+		bzwx_busi_recipes_info
+		where 0 = 0
+		<if test="recId!=null">
+			AND REC_ID = #{recId}
+		</if>
+		<if test="recName!=null">
+			AND REC_NAME = #{recName}
+		</if>
+		<if test="recCode!=null">
+			AND REC_CODE = #{recCode}
+		</if>
+		order by SORT_FLAG desc
+	</select>
+
+	<select id="getInfoByMap" parameterType="map" resultMap="RecipesMap">
+		select
+		REC_ID,REC_NAME,REC_CODE,REC_PRICE,REC_DISCOUNT_PRICE,REC_PIC_URL,REC_NOTE,REC_DESC,
+		SORT_FLAG,REC_VERSION,REC_STATUS,CREATE_DATE,UPDATE_DATE
+		from
+		bzwx_busi_recipes_info
+		where 0 = 0
+		<if test="recId!=null">
+			AND REC_ID = #{recId}
+		</if>
+		<if test="recName!=null">
+			AND REC_NAME = #{recName}
+		</if>
+		<if test="recCode!=null">
+			AND REC_CODE = #{recCode}
+		</if>
+	</select>
+
+	<select id="pageQuery" parameterType="map" resultMap="RecipesMap">
+		SELECT
+		row1_.* FROM (
+		SELECT row_.*, ROWNUM rownum_ FROM (
+
+		SELECT
+		REC_ID,REC_NAME,REC_CODE,REC_PRICE,REC_DISCOUNT_PRICE,REC_PIC_URL,REC_NOTE,REC_DESC,
+		SORT_FLAG,REC_VERSION,REC_STATUS,CREATE_DATE,UPDATE_DATE
+		FROM
+		bzwx_busi_recipes_info
+		<where>
+			<if test="searchKey!=null">
+				OR REC_NAME like CONCAT(CONCAT('%', #{searchKey}),'%')
+			</if>
+			<if test="searchKey!=null">
+				OR REC_CODE like CONCAT(CONCAT('%', #{searchKey}),'%')
+			</if>
+			<if test="searchKey!=null">
+				OR REC_PRICE like CONCAT(CONCAT('%', #{searchKey}),'%')
+			</if>
+			<if test="searchKey!=null">
+				OR REC_DISCOUNT_PRICE like CONCAT(CONCAT('%', #{searchKey}),'%')
+			</if>
+			<if test="searchKey!=null">
+				OR REC_NOTE like CONCAT(CONCAT('%', #{searchKey}),'%')
+			</if>
+			<if test="searchKey!=null">
+				OR REC_DESC like CONCAT(CONCAT('%', #{searchKey}),'%')
+			</if>
+		</where>
+
+		order by SORT_FLAG desc
+
+		) row_
+		WHERE ROWNUM
+		&lt;=
+		#{endNum}
+		) row1_ WHERE
+		rownum_
+		&gt;
+		#{beginNum}
+	</select>
+
+
+</mapper>

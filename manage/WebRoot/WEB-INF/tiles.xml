@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd" >
+<tiles-definitions>
+	<definition name="main" template="/common/index.jsp">
+		<put-attribute name="title" value="template"></put-attribute>
+		<put-attribute name="header" value="/common/header.jsp"></put-attribute>
+		<put-attribute name="leftmenu" value="/common/leftmenu.jsp"></put-attribute>
+		<put-attribute name="body" value="/common/body.jsp"></put-attribute>
+		<!--<put-attribute name="footer" value="/common/footer.jsp"></put-attribute> -->
+	</definition>
+
+	<definition name="index" extends="main">
+		<put-attribute name="title" value="遍在无线餐饮管理系统"></put-attribute>
+	</definition>
+
+	<definition name="error" extends="main">
+		<put-attribute name="title" value="遍在无线餐饮管理系统"></put-attribute>
+		<put-attribute name="body" value="/common/result.jsp"></put-attribute>
+	</definition>
+
+	<definition name="main.dispatchStatus" extends="main">
+		<put-attribute name="title" value="遍在无线餐饮管理系统 ：批量调度状态"></put-attribute>
+		<put-attribute name="body" value="/main/dispatchStatus.jsp"></put-attribute>
+	</definition>
+
+	<definition name="main.errLogRecord" extends="main">
+		<put-attribute name="title" value="遍在无线餐饮管理系统 ：错误日志记录"></put-attribute>
+		<put-attribute name="body" value="/main/errLogRecord.jsp"></put-attribute>
+	</definition>
+
+	<definition name="main.dispatchItem" extends="main">
+		<put-attribute name="title" value="遍在无线餐饮管理系统 ：批量调度细节"></put-attribute>
+		<put-attribute name="body" value="/main/dispatchItem.jsp"></put-attribute>
+	</definition>
+</tiles-definitions>

@@ -1,0 +1,62 @@
+-- Create table
+create table T_MONITOR_USER
+(
+  USERID    NUMBER not null,
+  USERNAME  VARCHAR2(40),
+  PASSWD    VARCHAR2(40),
+  LOGINFLAG VARCHAR2(1) default 'N'
+)
+tablespace BZWX
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+-- Add comments to the columns 
+comment on column T_MONITOR_USER.LOGINFLAG
+  is 'Y表示已经登录成功';
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table T_MONITOR_USER
+  add constraint PK_T_MONITOR_USER primary key (USERID)
+  using index 
+  tablespace BZWX
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 128K
+    next 128K
+    minextents 1
+    maxextents unlimited
+    pctincrease 0
+  );
+
+
+create or replace procedure pro_monitor_login(i_username in varchar2,
+                                              i_passwd   in varchar2,
+                                              o_logflag  out int) is
+  v_cnt int default 0; --判断用户名密码是否输入正确
+begin
+  select count(*)
+    into v_cnt
+    from t_monitor_user t
+   where t.username = i_username
+     and t.passwd = i_passwd;
+
+  if v_cnt = 0 then
+    o_logflag := 0;
+  else
+    select t.loginflag
+      into o_logflag
+      from t_monitor_user t
+     where t.username = i_username
+       and t.passwd = i_passwd;
+  end if;
+end pro_monitor_login;

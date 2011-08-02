@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bzwx.business.recipes.pojo.RecCateMap">
+
+	<resultMap type="com.bzwx.business.recipes.pojo.RecCateMap"
+		id="RecCateMap">
+		<result column="ID" property="id" javaType="java.lang.Long"
+			jdbcType="NUMUBERIC" />
+		<result column="REC_ID" property="recId" javaType="java.lang.Long"
+			jdbcType="NUMUBERIC" />
+		<result column="CATE_ID" property="cateId" javaType="java.lang.Long"
+			jdbcType="NUMUBERIC" />
+	</resultMap>
+
+	<insert id="insert" parameterType="map">
+		insert into
+		BZWX_BUSI_REC_CATE_MAP
+		(ID,REC_ID,CATE_ID)
+		values
+		(S_BZWX_BUSI_REC_CATE_MAP.NEXTVAL,#{recId},#{cateId})
+	</insert>
+
+	<delete id="delete" parameterType="Long">
+		delete
+		bzwx_busi_recipes_info
+		where REC_ID = #{recId}
+	</delete>
+
+	<delete id="deleteByIds" parameterType="String">
+		delete
+		bzwx_busi_recipes_info
+		where REC_ID in #{values}
+	</delete>
+
+	<select id="getListByMap" parameterType="map" resultMap="RecCateMap">
+		select
+		from
+		bzwx_busi_recipes_info
+		order by SORT_FLAG desc
+	</select>
+
+	<!-- 映射关系修改几乎用不到，基本是删除、新增 -->
+	<update id="update" parameterType="map">
+		update BZWX_BUSI_REC_CATE_MAP
+		<set>
+			<if test="recId!=null">
+				REC_ID=#{recId},
+			</if>
+			<if test="cateId!=null">
+				CATE_ID=#{cateId},
+			</if>
+		</set>
+		where REC_ID=#{recId}
+	</update>
+
+
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<!-- <typeAlias alias="errLogRecord" type="com.test.model.ErrLogRecord" 
+			/> <typeAlias alias="dispatchModel" type="com.test.model.DispatchModel" /> 
+			<typeAlias alias="user" type="com.test.model.User" /> -->
+		<typeAlias alias="Category" type="com.bzwx.business.category.pojo.Category" />
+		<typeAlias alias="Recipes" type="com.bzwx.business.recipes.pojo.Recipes" />
+
+	</typeAliases>
+
+	<mappers>
+		<!-- <mapper resource="com/test/mapper/odsmonitor.xml" /> -->
+		<!-- 若不配置使用自动扫描的方式 -->
+		<mapper resource="com/bzwx/business/category/pojo/CategoryMapper.xml" />
+		<mapper resource="com/bzwx/business/recipes/pojo/RecipesMapper.xml" />
+	</mappers>
+
+</configuration>		
+			

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.devMode" value="false" />
+	<!-- 修改配置文件不重启服务配置，开发用 -->
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<!-- org.apache.struts2.spring.StrutsSpringObjectFactory -->
+
+	<constant name="struts.objectFactory" value="spring" />
+	<constant name="struts.convention.result.path" value="/" />
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+
+
+	<package name="fileUploadDemo" extends="struts-default">
+		<action name="fileUpload" class="com.bzwx.business.recipes.action.UploadRecipesAction">
+			<interceptor-ref name="fileUploadStack" />
+			<result name="success">/admin/recipes/recipesManage.jsp</result>
+		</action>
+	</package>
+
+	<!-- Struts 零配置 -->
+	<!-- <package name="tiles" extends="tiles-default" namespace="/main"> <action 
+		name="dispatchStatus"> <result type="tiles">main.dispatchStatus</result> 
+		</action> <action name="errLogRecord"> <result type="tiles">main.errLogRecord</result> 
+		</action> <action name="dispatchItem"> <result type="tiles">main.dispatchItem</result> 
+		</action> </package> <package name="user" extends="tiles-default" namespace="/user"> 
+		<action name="login" class="user" method="login"> <result name="success">/user/login.jsp 
+		</result> </action> </package> -->
+
+
+</struts>    

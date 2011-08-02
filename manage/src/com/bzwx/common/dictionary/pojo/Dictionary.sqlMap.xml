@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+
+<!-- iBatis SQL Map 文件 -->
+<sqlMap namespace="com.bzwx.common.dictionary.pojo.Dictionary">
+
+	<typeAlias alias="Dictionary" type="com.bzwx.common.dictionary.pojo.Dictionary" />
+
+	<cacheModel id="DictionaryCache" type="OSCACHE">
+		<flushInterval hours="24" />
+		<flushOnExecute
+			statement="com.bzwx.common.dictionary.pojo.Dictionary.updateOrder_Insert" />
+		<flushOnExecute
+			statement="com.bzwx.common.dictionary.pojo.Dictionary.updateOrder_Update" />
+		<flushOnExecute statement="com.bzwx.common.dictionary.pojo.Dictionary.deleteAll" />
+		<flushOnExecute statement="com.bzwx.common.dictionary.pojo.Dictionary.update" />
+		<flushOnExecute statement="com.bzwx.common.dictionary.pojo.Dictionary.insert" />
+		<flushOnExecute
+			statement="com.bzwx.common.dictionary.pojo.Dictionary.deleteByPrimaryKey" />
+		<flushOnExecute
+			statement="com.bzwx.common.dictionary.pojo.Dictionary.updateOrder" />
+		<flushOnExecute
+			statement="com.bzwx.common.dictionary.pojo.Dictionary.initializedDictionary" />
+		<property name="size" value="1000" />
+	</cacheModel>
+
+	<!--result map -->
+	<resultMap id="dictionaryMap" class="Dictionary">
+		<result property="id" column="DICTIONARY_ID" jdbcType="Long" />
+		<result property="parentId" column="PARENT_ID" jdbcType="Long" />
+		<result property="keyCode" column="KEY_CODE" jdbcType="String" />
+		<result property="keyName" column="KEY_NAME" jdbcType="String" />
+		<result property="keyValue" column="KEY_VALUE" jdbcType="String" />
+		<result property="description" column="DESCRIPTION" jdbcType="String" />
+		<result property="sortFlag" column="SORT_FLAG" jdbcType="Integer" />
+	</resultMap>
+
+	<update id="updateOrder_Insert" parameterClass="java.util.Map">
+		update DICTIONARY
+		set SORT_FLAG=SORT_FLAG+1 where
+		PARENT_ID=#parentId# and
+		SORT_FLAG
+		&gt;=#sortFlag#
+	</update>
+
+	<update id="updateOrder_Update" parameterClass="java.util.Map">
+
+		update DICTIONARY
+		<dynamic>
+			<isGreaterThan property="newOrder" compareProperty="oldOrder">
+				set
+				SORT_FLAG=SORT_FLAG-1
+				where
+				PARENT_ID=#parentId# and SORT_FLAG
+				&gt;#oldOrder# and
+				SORT_FLAG &lt;=#newOrder#
+			</isGreaterThan>
+			<isLessThan property="newOrder" compareProperty="oldOrder">
+				set
+				SORT_FLAG=SORT_FLAG+1
+				where
+				PARENT_ID=#parentId# and SORT_FLAG
+				&gt;=#newOrder# and
+				SORT_FLAG &lt;#oldOrder#
+			</isLessThan>
+		</dynamic>
+	</update>
+
+	<update id="updateOrder" parameterClass="java.util.Map">
+		update DICTIONARY set
+		SORT_FLAG=#sortFlag# where
+		DICTIONARY_ID = #id#
+	</update>
+
+	<delete id="deleteAll" parameterClass="String">
+		delete DICTIONARY where
+		DICTIONARY_ID in ($value$)
+	</delete>
+
+	<select id="getDictionaryByCode" parameterClass="String"
+		resultMap="dictionaryMap" cacheModel="DictionaryCache">
+		select * from DICTIONARY where
+		KEY_CODE = #value#
+	</select>
+	<select id="getDictionaryByKeyCode" parameterClass="java.lang.String"
+		resultMap="dictionaryMap">
+		select * from DICTIONARY where KEY_CODE = #value#
+	</select>
+
+	<select id="getChildrensByParentId" parameterClass="Long"
+		resultMap="dictionaryMap" cacheModel="DictionaryCache">
+		select * from DICTIONARY where
+		PARENT_ID = #value# and DICTIONARY_ID &lt;&gt; PARENT_ID order by
+		SORT_FLAG
+	</select>
+
+	<select id="getOrdinalChildrensByParentId" parameterClass="java.util.Map"
+		resultMap="dictionaryMap" cacheModel="DictionaryCache">
+		select * from DICTIONARY where
+		PARENT_ID = #parentId# and DICTIONARY_ID &lt;&gt; PARENT_ID order by
+		$sortName$
+	</select>
+
+	<select id="getChildrensByParent" parameterClass="Dictionary"
+		resultMap="dictionaryMap" cacheModel="DictionaryCache">
+		select * from DICTIONARY where
+		PARENT_ID = #parentId# and DICTIONARY_ID &lt;&gt; PARENT_ID order by
+		SORT_FLAG
+	</select>
+
+	<select id="getAllByPaging" parameterClass="java.util.Map"
+		resultMap="dictionaryMap" cacheModel="DictionaryCache">
+		SELECT * FROM (
+		SELECT row_.*,
+		ROWNUM rownum_ FROM (
+		select * from DICTIONARY where PARENT_ID =
+		#parentId# and DICTIONARY_ID
+		&lt;&gt; PARENT_ID order by $sortName$
+		$dir$
+		) row_
+		WHERE ROWNUM &lt;= #end#
+		) WHERE rownum_ &gt;#begin#
+	</select>
+
+	<select id="getTopmost" resultMap="dictionaryMap" cacheModel="DictionaryCache">
+		select * from DICTIONARY where PARENT_ID = DICTIONARY_ID
+	</select>
+
+	<insert id="initializedDictionary">
+		insert into
+		DICTIONARY(DICTIONARY_ID,PARENT_ID,KEY_CODE,KEY_NAME,KEY_VALUE,DESCRIPTION)
+		values(-1,-1,'TOP_DICTIONARY','字典根节点',null,'系统字典表的最顶级字典项')
+	</insert>
+
+	<!-- 底层框架需要的配置 -->
+	<insert id="insert" parameterClass="Dictionary">
+		insert into
+		DICTIONARY(DICTIONARY_ID,PARENT_ID,KEY_CODE,KEY_NAME,KEY_VALUE,DESCRIPTION,SORT_FLAG)
+		values(#id#, #parentId#, #keyCode#, #keyName#,
+		#keyValue#,#description#,#sortFlag#)
+	</insert>
+	<delete id="deleteByPrimaryKey" parameterClass="java.lang.Long">
+		delete from
+		DICTIONARY where DICTIONARY_ID = #value#
+	</delete>
+	<select id="select" resultMap="dictionaryMap">
+		select * from DICTIONARY
+		<dynamic prepend="WHERE">
+			<isParameterPresent prepend="and">
+				DICTIONARY_ID =
+				#value#
+			</isParameterPresent>
+		</dynamic>
+	</select>
+	<update id="update" parameterClass="Dictionary">
+		update DICTIONARY set
+		KEY_NAME=#keyName#,
+		KEY_CODE=#keyCode#,
+		PARENT_ID=#parentId#,
+		KEY_VALUE=#keyValue#,
+		SORT_FLAG=#sortFlag#,
+		DESCRIPTION=#description#
+		where DICTIONARY_ID=#id#
+	</update>
+</sqlMap>

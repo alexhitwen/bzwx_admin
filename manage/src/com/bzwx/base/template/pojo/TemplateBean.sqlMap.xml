@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="com.bzwx.base.template.pojo.TemplateBean">
+
+	<typeAlias alias="Template" type="com.bzwx.base.template.pojo.TemplateBean" />
+
+	<insert id="insert" parameterClass="TemplateBean">
+		INSERT into
+		TEMPLATE_TABLE
+		(ID,NAME,CODE)
+		values
+		(#id#,#name#,#code#)
+	</insert>
+
+	<update id="update" parameterClass="TemplateBean">
+		UPDATE TEMPLATE_TABLE
+		set NAME
+		=
+		#name#,
+		CODE = #code#
+		where ID = #id#
+	</update>
+
+	<update id="updateByMap" parameterClass="Map">
+		UPDATE TEMPLATE_TABLE
+		set NAME
+		= #name#,
+		CODE = #code#
+		where ID = #id#
+	</update>
+
+	<delete id="delete" parameterClass="long">
+		DELETE TEMPLATE_TABLE
+		where ID
+		=
+		#id#
+	</delete>
+
+	<delete id="deleteByIds" parameterClass="String">
+		DELETE TEMPLATE_TABLE
+		where ID
+		=
+		$value$
+	</delete>
+
+	<select id="getInfoById" resultClass="TemplateBean">
+		select * from
+		TEMPLATE_TABLE where ID = #id#
+	</select>
+	<select id="getInfoByMap">
+		select * from
+		TEMPLATE_TABLE where ID = #id#
+	</select>
+	<select id="getAllList" resultMap="TemplateBeanMap">
+		select * from
+		TEMPLATE_TABLE
+	</select>
+	<select id="getListByMap" resultMap="TemplateBeanMap">
+		select * from
+		TEMPLATE_TABLE
+	</select>
+
+</sqlMap>
