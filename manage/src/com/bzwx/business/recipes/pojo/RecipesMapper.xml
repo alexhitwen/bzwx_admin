@@ -196,13 +196,57 @@
 
 		) row_
 		WHERE ROWNUM
-		&lt;=
+		&lt;
 		#{endNum}
 		) row1_ WHERE
 		rownum_
-		&gt;
+		&gt;=
 		#{beginNum}
 	</select>
 
+
+
+
+	<resultMap id="RecipesCateMap" type="recipes">
+		<result column="REC_ID" property="recId" javaType="Long" />
+		<result column="REC_NAME" property="recName" javaType="String" />
+		<result column="REC_CODE" property="recCode" javaType="String" />
+		<result column="REC_PRICE" property="recPrice" javaType="Double" />
+		<result column="REC_DISCOUNT_PRICE" property="recDiscountPrice"
+			javaType="Double" />
+		<result column="REC_PIC_URL" property="recPicUrl" javaType="String" />
+		<result column="REC_STATUS" property="recStatus" javaType="Integer" />
+		
+		<result column="CATE_ID" property="cateId" javaType="java.lang.Long" />
+		<result column="PARENT_ID" property="parentId" javaType="java.lang.Long" />
+	</resultMap>
+	
+	<select id="getListByCateId" parameterType="Long" resultMap="RecipesCateMap">
+		select
+		t1.REC_ID,t1.REC_NAME,t1.REC_CODE,t1.REC_PRICE,t1.REC_DISCOUNT_PRICE,
+		t1.REC_PIC_URL,t2.CATE_ID,t2.PARENT_ID,
+		t1.REC_NOTE,t1.REC_DESC,
+		t1.SORT_FLAG,t1.REC_VERSION,t1.REC_STATUS,
+		t1.CREATE_DATE,t1.UPDATE_DATE
+		from
+		bzwx_busi_recipes_info t1 , BZWX_BUSI_REC_CATE_MAP t2
+		where 0 = 0
+		<if test="cateId!=null">
+			AND CATE_ID = #{cateId}
+		</if>
+		<if test="parentId!=null">
+			AND PARENT_ID = #{parentId}
+		</if>
+		<if test="recId!=null">
+			AND REC_ID = #{recId}
+		</if>
+		<if test="recName!=null">
+			AND REC_NAME = #{recName}
+		</if>
+		<if test="recCode!=null">
+			AND REC_CODE = #{recCode}
+		</if>
+		order by SORT_FLAG desc
+	</select>
 
 </mapper>

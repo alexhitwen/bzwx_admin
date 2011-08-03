@@ -4,20 +4,18 @@
 
 	<resultMap type="com.bzwx.business.recipes.pojo.RecCateMap"
 		id="RecCateMap">
-		<result column="ID" property="id" javaType="java.lang.Long"
-			jdbcType="NUMUBERIC" />
-		<result column="REC_ID" property="recId" javaType="java.lang.Long"
-			jdbcType="NUMUBERIC" />
-		<result column="CATE_ID" property="cateId" javaType="java.lang.Long"
-			jdbcType="NUMUBERIC" />
+		<result column="ID" property="id" javaType="java.lang.Long" />
+		<result column="REC_ID" property="recId" javaType="java.lang.Long" />
+		<result column="CATE_ID" property="cateId" javaType="java.lang.Long" />
+		<result column="PARENT_ID" property="parentId" javaType="java.lang.Long" />
 	</resultMap>
 
 	<insert id="insert" parameterType="map">
 		insert into
 		BZWX_BUSI_REC_CATE_MAP
-		(ID,REC_ID,CATE_ID)
+		(ID,REC_ID,CATE_ID,PARENT_ID)
 		values
-		(S_BZWX_BUSI_REC_CATE_MAP.NEXTVAL,#{recId},#{cateId})
+		(S_BZWX_BUSI_REC_CATE_MAP.NEXTVAL,#{recId},#{cateId},#{parentId})
 	</insert>
 
 	<delete id="delete" parameterType="Long">
@@ -45,6 +43,9 @@
 		</if>
 		<if test="recId!=null">
 			REC_ID = #{recId}
+		</if>
+		<if test="parentId!=null">
+			PARENT_ID = #{parentId}
 		</if>
 		order by SORT_FLAG desc
 	</select>

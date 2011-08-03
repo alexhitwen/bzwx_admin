@@ -12,6 +12,7 @@ public class RecCateMap {
 	private Long id;
 	private Long recId;
 	private Long cateId;
+	private Long parentId;
 
 	public Long getId() {
 		return id;
@@ -35,6 +36,14 @@ public class RecCateMap {
 
 	public void setCateId(Long cateId) {
 		this.cateId = cateId;
+	}
+
+	public Long getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Long parentId) {
+		this.parentId = parentId;
 	}
 
 }

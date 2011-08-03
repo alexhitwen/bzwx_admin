@@ -18,7 +18,6 @@ public class RecCateMapDaoImpl extends IBatisBaseDao<RecCateMap> {
 	public void update(RecCateMap o) {
 		getSqlSessionTemplate().update(
 				"com.bzwx.business.recipes.pojo.RecCateMap.update", o);
-
 	}
 
 	@Override
