@@ -43,35 +43,29 @@
 		</b>|| ———————————————————————————————||<b><a
 			href="${ctx}/recipes/pageQuery!pageQuery.action">返回</a> </b>||——<br>
 		<br> <br>
-		
-		
-		<s:form action="fileUpload"
-			method="POST" enctype="multipart/form-data">
-			<s:file size="10" name ="image" ></s:file>
-			<s:textfield name ="text1" label ="Text1" />
-			<s:textfield name="caption" label="Caption"></s:textfield>
-			<img src ='${ctx}/images/<s:property value ="image" />' />
-			<s:submit />
-		</s:form>
-		
-		
-		<form action="${ctx}/UploadRecipesServlet" name="recipesForm"
-			method="post" enctype="multipart/form-data">
+
+
+
+
+		<s:form action="fileUpload" method="POST"
+			enctype="multipart/form-data">
+
+			<!-- <s:textfield name="caption" label="Caption"></s:textfield> -->
 
 			<table id="tab1" width="50%" style="margin-left: 200px">
 				<tr style="height: 12px;">
-					<td colspan="2"><input type="text" id="recId" name="recId"
-						value="" /></td>
+					<td colspan="2"><s:textfield name="recId" label="RecId"></s:textfield><input
+						type="text" id="recId" name="recId" value="" /></td>
 				</tr>
 				<tr style="height: 12px;">
 					<td>菜品名称</td>
-					<td><input type="text" id="recName" name="recName" value="名称" /><font
+					<td><s:textfield name="recName" label="RecName"></s:textfield><font
 						color=red>*</font>（限200）</td>
 				</tr>
 				<tr style="height: 12px;">
 					<td>菜品拼音</td>
-					<td><input type="text" id="recCode" name="recCode"
-						value="codeee" /><font color=red>*</font>（限100）</td>
+					<td><s:textfield name="recCode" label="RecCode"></s:textfield><font
+						color=red>*</font>（限100）</td>
 				</tr>
 				<tr style="height: 12px;">
 					<td>菜品价格</td>
@@ -85,8 +79,7 @@
 				</tr>
 				<tr style="height: 12px;">
 					<td>菜品图片</td>
-					<td><input type="file" id="fileName" name="fileName"
-						width="100px" /> （限数字）</td>
+					<td><s:file size="10" name="image"></s:file></td>
 				</tr>
 				<!--  
 				<tr style="height: 12px;">
@@ -131,12 +124,11 @@
 						onclick="WdatePicker();" readonly="readonly" value="" /> （限日期）</td>
 				</tr>
 				<tr align="center">
-					<td colspan="2"><br> <br> <input value="确 定"
-						type="submit" /><input value="重 置" onclick="reset()"
-						type="button" /></td>
+					<td colspan="2"><br> <br> <s:submit value="提交" /><input
+						value="重 置" onclick="reset()" type="button" /></td>
 				</tr>
 			</table>
-		</form>
+		</s:form>
 	</div>
 </body>
 </html>

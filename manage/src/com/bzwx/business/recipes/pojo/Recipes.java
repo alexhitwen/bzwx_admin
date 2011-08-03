@@ -14,8 +14,10 @@ public class Recipes implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long recCateId; // 非表字段
-	private String recCateName; // 非表字段
+	private String firstCateId;// 非表字段
+	private String firstCateName;// 非表字段
+	private Long secCateId; // 非表字段
+	private Long secCateName; // 非表字段
 	private String allCateName; // 非表字段
 
 	private long recId; // 菜品主键
@@ -141,28 +143,44 @@ public class Recipes implements Serializable {
 		return serialVersionUID;
 	}
 
-	public long getRecCateId() {
-		return recCateId;
-	}
-
-	public void setRecCateId(long recCateId) {
-		this.recCateId = recCateId;
-	}
-
-	public String getRecCateName() {
-		return recCateName;
-	}
-
-	public void setRecCateName(String recCateName) {
-		this.recCateName = recCateName;
-	}
-
 	public String getAllCateName() {
 		return allCateName;
 	}
 
 	public void setAllCateName(String allCateName) {
 		this.allCateName = allCateName;
+	}
+
+	public String getFirstCateId() {
+		return firstCateId;
+	}
+
+	public void setFirstCateId(String firstCateId) {
+		this.firstCateId = firstCateId;
+	}
+
+	public String getFirstCateName() {
+		return firstCateName;
+	}
+
+	public void setFirstCateName(String firstCateName) {
+		this.firstCateName = firstCateName;
+	}
+
+	public Long getSecCateId() {
+		return secCateId;
+	}
+
+	public void setSecCateId(Long secCateId) {
+		this.secCateId = secCateId;
+	}
+
+	public Long getSecCateName() {
+		return secCateName;
+	}
+
+	public void setSecCateName(Long secCateName) {
+		this.secCateName = secCateName;
 	}
 
 }

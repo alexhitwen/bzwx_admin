@@ -1,13 +1,15 @@
 package com.bzwx.business.recipes.action;
 
 import java.io.File;
-
-import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bzwx.base.Struts2BaseAction;
+import com.bzwx.business.recipes.pojo.Recipes;
+import com.bzwx.business.recipes.service.RecipesService;
 import com.opensymphony.xwork2.ActionContext;
 
 /**
@@ -21,74 +23,68 @@ public class UploadRecipesAction extends Struts2BaseAction {
 
 	private static final long serialVersionUID = 1L;
 
-	// @Autowired
-	// private RecipesService recipesService;
+	@Autowired
+	private RecipesService recipesService;
 
-	// private Recipes recipes;
+	private Recipes recipes;
 
-	// private String recCateName;
-	// private String allCateName;
-	//
-	// private long recId;
-	// private String recName;
-	// private String recCode;
-	// private double recPrice;
-	// private double recDiscountPrice;
-	// private String recPicUrl;
-	// private String recNote;
-	// private String recDesc;
-	// private int sortFlag;
-	//
-	// private int recVersion;
-	// private int recStatus;
-	// private Date creataDate;
-	// private Date updateDate;
+	private String firstCateId;
+	private String firstCateName;
+	private Long secCateId; //
+	private Long secCateName; //
+	private String allCateName;
 
+	private long recId; //
+	private String recName;
+	private String recCode;
+	private double recPrice; //
+	private double recDiscountPrice; //
+	private String recPicUrl;
+	private String recNote;
+	private String recDesc;
+	private int sortFlag; //
+
+	private int recVersion; //
+	private int recStatus; //
+	private Date creataDate; //
+	private Date updateDate; //
+
+	// 图片上传用
 	private File image;
 	private String imageFileName;
 	private String imageContentType;
-
-	private String text1;
-
-	public String getText1() {
-		return text1;
-	}
-
-	public String getImageContentType() {
-		return imageContentType;
-	}
-
-	private String caption;
-	public String getCaption() {
-		return caption;
-	}
-
-	public void setCaption(String caption) {
-		this.caption = caption;
-	}
-
-	
-
-	public void setImageContentType(String imageContentType) {
-		this.imageContentType = imageContentType;
-	}
-
-	public void setText1(String text1) {
-		this.text1 = text1;
-	}
 
 	public String addUI() {
 		return "success";
 	}
 
-
 	public String execute() throws Exception {
 
-		String realpath = ServletActionContext.getServletContext().getRealPath(
-				"/images");
+		recipes = new Recipes();
+		recipes.setAllCateName(allCateName);
+		recipes.setFirstCateId(firstCateId);
+		recipes.setFirstCateName(firstCateName);
+		recipes.setSecCateId(secCateId);
+		recipes.setSecCateName(secCateName);
 
-		System.out.println("text1》》》" + text1);
-		System.out.println("caption>>>" + caption);
+		recipes.setRecId(recId);
+		recipes.setRecName(recName);
+		recipes.setRecCode(recCode);
+		recipes.setRecPrice(recPrice);
+		recipes.setRecDiscountPrice(recDiscountPrice);
+
+		recipes.setRecNote(recNote);
+		recipes.setRecDesc(recDesc);
+
+		recipes.setRecVersion(recVersion);
+		recipes.setSortFlag(sortFlag);
+		recipes.setRecVersion(recVersion);
+		recipes.setRecStatus(recStatus);
+		recipes.setCreataDate(creataDate);
+		recipes.setUpdateDate(updateDate);
+
+		String realpath = ServletActionContext.getServletContext().getRealPath(
+				"/upload");
 
 		System.out.println(realpath);
 		if (image != null) {
@@ -98,6 +94,8 @@ public class UploadRecipesAction extends Struts2BaseAction {
 			FileUtils.copyFile(image, savefile);
 			ActionContext.getContext().put("message", "上传成功");
 		}
+
+		recipes.setRecPicUrl(recPicUrl);
 		return "success";
 	}
 
