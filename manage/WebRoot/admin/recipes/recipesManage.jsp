@@ -44,41 +44,34 @@
 			href="${ctx}/recipes/pageQuery!pageQuery.action">返回</a> </b>||——<br>
 		<br> <br>
 
-
-
-
 		<s:form action="fileUpload" method="POST"
 			enctype="multipart/form-data">
 
-			<!-- <s:textfield name="caption" label="Caption"></s:textfield> -->
+			<!--  <s:textfield name="caption" label="Caption"></s:textfield> -->
 
 			<table id="tab1" width="50%" style="margin-left: 200px">
 				<tr style="height: 12px;">
-					<td colspan="2"><s:textfield name="recId" label="RecId"></s:textfield><input
-						type="text" id="recId" name="recId" value="" /></td>
+					<td colspan="2"><s:textfield name="recId" label="RecId(hidden)"></s:textfield>
+					</td>
 				</tr>
 				<tr style="height: 12px;">
-					<td>菜品名称</td>
-					<td><s:textfield name="recName" label="RecName"></s:textfield><font
-						color=red>*</font>（限200）</td>
+					<td><s:textfield name="recName" label="菜品名称（限200）"></s:textfield>
+					</td>
 				</tr>
 				<tr style="height: 12px;">
-					<td>菜品拼音</td>
-					<td><s:textfield name="recCode" label="RecCode"></s:textfield><font
-						color=red>*</font>（限100）</td>
+					<td><s:textfield name="recCode" label="菜品拼音（限100）"></s:textfield>
+					</td>
 				</tr>
 				<tr style="height: 12px;">
-					<td>菜品价格</td>
-					<td><input type="text" id="recPrice" name="recPrice"
-						value="111" /><font color=red>*</font>（限数字）</td>
+					<td><s:textfield name="recPrice" label="菜品价格（限数字）"></s:textfield>
+					</td>
 				</tr>
 				<tr style="height: 12px;">
-					<td>菜品折扣价</td>
-					<td><input type="text" id="recDiscountPrice"
-						name="recDiscountPrice" value="111" /> （限数字）</td>
+					<td><s:textfield name="recDiscountPrice"
+							label="菜品折扣价"></s:textfield>
+					</td>
 				</tr>
 				<tr style="height: 12px;">
-					<td>菜品图片</td>
 					<td><s:file size="10" name="image"></s:file></td>
 				</tr>
 				<!--  
@@ -89,43 +82,35 @@
 					</td>
 				</tr>-->
 				<tr style="height: 12px;">
-					<td>菜品批注</td>
-					<td><input type="text" id="recNote" name="recNote"
-						value="菜品批注" /> （限400）</td>
+					<td><s:textfield name="recNote" label="菜品批注（限400）"></s:textfield>
+					</td>
 				</tr>
 				<tr style="height: 12px;">
-					<td>菜品详情</td>
-					<td><input type="text" id="recDesc" name="recDesc"
-						value="菜品详情" /> （限2000）</td>
+					<td><s:textfield name="recDesc" label="菜品详情（限2000）"></s:textfield>
+					</td>
 				</tr>
 				<tr style="height: 12px;">
-					<td>排序标识</td>
-					<td><input type="text" id="sortFlag" name="sortFlag" value="1" />
-						（限数字）</td>
+					<td><s:textfield name="sortFlag" label="排序标识（后续自动）"></s:textfield>
+					</td>
 				</tr>
 				<tr style="height: 12px;">
-					<td>菜品版本</td>
-					<td><input type="text" id="recVersion" name="recVersion"
-						value="1" /> （限数字）</td>
+					<td><s:textfield name="recVersion" label="菜品版本"></s:textfield>
+					</td>
 				</tr>
 				<tr style="height: 12px;">
-					<td>同步状态</td>
-					<td><input type="text" id="recStatus" name="recStatus"
-						value="1" /> （限数字1位）</td>
+					<td><s:textfield name="recStatus" label="同步状态"></s:textfield>
+					</td>
 				</tr>
 				<tr style="height: 12px;">
-					<td>创建时间</td>
-					<td><input type="text" id="createDate" name="createDate"
-						onclick="WdatePicker();" readonly="readonly" value="" /> （限日期）</td>
+					<td><s:textfield name="createDate" label="创建时间"
+							onclick="WdatePicker();" readonly="readonly"></s:textfield></td>
 				</tr>
 				<tr style="height: 12px;">
-					<td>修改时间</td>
-					<td><input type="text" id="updateDate" name="updateDate"
-						onclick="WdatePicker();" readonly="readonly" value="" /> （限日期）</td>
+					<td><s:textfield name="updateDate" label="修改时间"
+							onclick="WdatePicker();" readonly="readonly"></s:textfield></td>
 				</tr>
 				<tr align="center">
-					<td colspan="2"><br> <br> <s:submit value="提交" /><input
-						value="重 置" onclick="reset()" type="button" /></td>
+					<td colspan="2"><br> <br> <s:submit value="提交" /></td>
 				</tr>
 			</table>
 		</s:form>

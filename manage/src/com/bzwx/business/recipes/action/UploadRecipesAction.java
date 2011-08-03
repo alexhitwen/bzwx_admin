@@ -1,6 +1,7 @@
 package com.bzwx.business.recipes.action;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
@@ -23,80 +24,221 @@ public class UploadRecipesAction extends Struts2BaseAction {
 
 	private static final long serialVersionUID = 1L;
 
-	@Autowired
-	private RecipesService recipesService;
-
 	private Recipes recipes;
 
 	private String firstCateId;
 	private String firstCateName;
-	private Long secCateId; //
-	private Long secCateName; //
+	private String secCateId; // Long
+	private String secCateName; // Long
 	private String allCateName;
 
-	private long recId; //
+	private String recId; // Long
 	private String recName;
 	private String recCode;
-	private double recPrice; //
-	private double recDiscountPrice; //
+	private String recPrice; // double
+	private String recDiscountPrice; // double
 	private String recPicUrl;
 	private String recNote;
 	private String recDesc;
-	private int sortFlag; //
+	private String sortFlag; // int
 
-	private int recVersion; //
-	private int recStatus; //
-	private Date creataDate; //
-	private Date updateDate; //
+	private String recVersion; // int
+	private String recStatus; // int
+	private String createDate; // Date
+	private String updateDate; // Date
 
 	// 图片上传用
 	private File image;
 	private String imageFileName;
 	private String imageContentType;
 
-	public String addUI() {
-		return "success";
-	}
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+	@Autowired
+	private RecipesService recipesService;
 
 	public String execute() throws Exception {
 
 		recipes = new Recipes();
-		recipes.setAllCateName(allCateName);
-		recipes.setFirstCateId(firstCateId);
-		recipes.setFirstCateName(firstCateName);
-		recipes.setSecCateId(secCateId);
-		recipes.setSecCateName(secCateName);
-
-		recipes.setRecId(recId);
 		recipes.setRecName(recName);
 		recipes.setRecCode(recCode);
-		recipes.setRecPrice(recPrice);
-		recipes.setRecDiscountPrice(recDiscountPrice);
+		recipes.setRecPrice(Double.valueOf(recPrice));
+
+		if (!"".equals(recDiscountPrice)) {
+			recipes.setRecDiscountPrice(Double.valueOf(recDiscountPrice));
+		}
 
 		recipes.setRecNote(recNote);
 		recipes.setRecDesc(recDesc);
 
-		recipes.setRecVersion(recVersion);
-		recipes.setSortFlag(sortFlag);
-		recipes.setRecVersion(recVersion);
-		recipes.setRecStatus(recStatus);
-		recipes.setCreataDate(creataDate);
-		recipes.setUpdateDate(updateDate);
+		recipes.setRecVersion(Integer.valueOf(recVersion));
+		recipes.setSortFlag(Integer.valueOf(sortFlag));
+		recipes.setRecVersion(Integer.valueOf(recVersion));
 
 		String realpath = ServletActionContext.getServletContext().getRealPath(
 				"/upload");
 
 		System.out.println(realpath);
+
 		if (image != null) {
 			File savefile = new File(new File(realpath), imageFileName);
 			if (!savefile.getParentFile().exists())
 				savefile.getParentFile().mkdirs();
 			FileUtils.copyFile(image, savefile);
 			ActionContext.getContext().put("message", "上传成功");
+			recipes.setRecPicUrl("/upload" + imageFileName);
 		}
 
-		recipes.setRecPicUrl(recPicUrl);
+		if (!"".equals(allCateName) && null != allCateName)
+			recipes.setAllCateName(allCateName);
+		if (!"".equals(firstCateId) && null != firstCateId)
+			recipes.setFirstCateId(Long.valueOf(firstCateId));
+		if (!"".equals(firstCateName) && null != firstCateName)
+			recipes.setFirstCateName(firstCateName);
+		if (!"".equals(secCateId) && null != secCateId)
+			recipes.setSecCateId(Long.valueOf(secCateId));
+		if (!"".equals(secCateName) && null != secCateName)
+			recipes.setSecCateName(secCateName);
+
+		if ("".equals(recId)) {
+			recipes.setCreateDate(sdf.parse(createDate));
+			recipes.setUpdateDate(sdf.parse(updateDate));
+			recipesService.insert(recipes);
+		} else {
+			recipes.setUpdateDate(sdf.parse(updateDate));
+			recipes.setRecId(Long.valueOf(recId));
+			recipesService.update(recipes);
+		}
+
 		return "success";
+	}
+
+	public String getSecCateId() {
+		return secCateId;
+	}
+
+	public void setSecCateId(String secCateId) {
+		this.secCateId = secCateId;
+	}
+
+	public String getSecCateName() {
+		return secCateName;
+	}
+
+	public void setSecCateName(String secCateName) {
+		this.secCateName = secCateName;
+	}
+
+	public String getAllCateName() {
+		return allCateName;
+	}
+
+	public void setAllCateName(String allCateName) {
+		this.allCateName = allCateName;
+	}
+
+	public String getRecId() {
+		return recId;
+	}
+
+	public void setRecId(String recId) {
+		this.recId = recId;
+	}
+
+	public String getRecName() {
+		return recName;
+	}
+
+	public void setRecName(String recName) {
+		this.recName = recName;
+	}
+
+	public String getRecCode() {
+		return recCode;
+	}
+
+	public void setRecCode(String recCode) {
+		this.recCode = recCode;
+	}
+
+	public String getRecPrice() {
+		return recPrice;
+	}
+
+	public void setRecPrice(String recPrice) {
+		this.recPrice = recPrice;
+	}
+
+	public String getRecDiscountPrice() {
+		return recDiscountPrice;
+	}
+
+	public void setRecDiscountPrice(String recDiscountPrice) {
+		this.recDiscountPrice = recDiscountPrice;
+	}
+
+	public String getRecPicUrl() {
+		return recPicUrl;
+	}
+
+	public void setRecPicUrl(String recPicUrl) {
+		this.recPicUrl = recPicUrl;
+	}
+
+	public String getRecNote() {
+		return recNote;
+	}
+
+	public void setRecNote(String recNote) {
+		this.recNote = recNote;
+	}
+
+	public String getRecDesc() {
+		return recDesc;
+	}
+
+	public void setRecDesc(String recDesc) {
+		this.recDesc = recDesc;
+	}
+
+	public String getSortFlag() {
+		return sortFlag;
+	}
+
+	public void setSortFlag(String sortFlag) {
+		this.sortFlag = sortFlag;
+	}
+
+	public String getRecVersion() {
+		return recVersion;
+	}
+
+	public void setRecVersion(String recVersion) {
+		this.recVersion = recVersion;
+	}
+
+	public String getRecStatus() {
+		return recStatus;
+	}
+
+	public void setRecStatus(String recStatus) {
+		this.recStatus = recStatus;
+	}
+
+	public String getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
+	}
+
+	public String getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(String updateDate) {
+		this.updateDate = updateDate;
 	}
 
 	public File getImage() {
@@ -115,132 +257,44 @@ public class UploadRecipesAction extends Struts2BaseAction {
 		this.imageFileName = imageFileName;
 	}
 
-	// public Recipes getRecipes() {
-	// return recipes;
-	// }
-	//
-	// public void setRecipes(Recipes recipes) {
-	// this.recipes = recipes;
-	// }
-	//
-	// public String getRecCateName() {
-	// return recCateName;
-	// }
-	//
-	// public void setRecCateName(String recCateName) {
-	// this.recCateName = recCateName;
-	// }
-	//
-	// public String getAllCateName() {
-	// return allCateName;
-	// }
-	//
-	// public void setAllCateName(String allCateName) {
-	// this.allCateName = allCateName;
-	// }
-	//
-	// public long getRecId() {
-	// return recId;
-	// }
-	//
-	// public void setRecId(long recId) {
-	// this.recId = recId;
-	// }
-	//
-	// public String getRecName() {
-	// return recName;
-	// }
-	//
-	// public void setRecName(String recName) {
-	// this.recName = recName;
-	// }
-	//
-	// public String getRecCode() {
-	// return recCode;
-	// }
-	//
-	// public void setRecCode(String recCode) {
-	// this.recCode = recCode;
-	// }
-	//
-	// public double getRecPrice() {
-	// return recPrice;
-	// }
-	//
-	// public void setRecPrice(double recPrice) {
-	// this.recPrice = recPrice;
-	// }
-	//
-	// public double getRecDiscountPrice() {
-	// return recDiscountPrice;
-	// }
-	//
-	// public void setRecDiscountPrice(double recDiscountPrice) {
-	// this.recDiscountPrice = recDiscountPrice;
-	// }
-	//
-	// public String getRecPicUrl() {
-	// return recPicUrl;
-	// }
-	//
-	// public void setRecPicUrl(String recPicUrl) {
-	// this.recPicUrl = recPicUrl;
-	// }
-	//
-	// public String getRecNote() {
-	// return recNote;
-	// }
-	//
-	// public void setRecNote(String recNote) {
-	// this.recNote = recNote;
-	// }
-	//
-	// public String getRecDesc() {
-	// return recDesc;
-	// }
-	//
-	// public void setRecDesc(String recDesc) {
-	// this.recDesc = recDesc;
-	// }
-	//
-	// public int getSortFlag() {
-	// return sortFlag;
-	// }
-	//
-	// public void setSortFlag(int sortFlag) {
-	// this.sortFlag = sortFlag;
-	// }
-	//
-	// public int getRecVersion() {
-	// return recVersion;
-	// }
-	//
-	// public void setRecVersion(int recVersion) {
-	// this.recVersion = recVersion;
-	// }
-	//
-	// public int getRecStatus() {
-	// return recStatus;
-	// }
-	//
-	// public void setRecStatus(int recStatus) {
-	// this.recStatus = recStatus;
-	// }
-	//
-	// public Date getCreataDate() {
-	// return creataDate;
-	// }
-	//
-	// public void setCreataDate(Date creataDate) {
-	// this.creataDate = creataDate;
-	// }
-	//
-	// public Date getUpdateDate() {
-	// return updateDate;
-	// }
-	//
-	// public void setUpdateDate(Date updateDate) {
-	// this.updateDate = updateDate;
-	// }
+	public String getImageContentType() {
+		return imageContentType;
+	}
+
+	public void setImageContentType(String imageContentType) {
+		this.imageContentType = imageContentType;
+	}
+
+	public RecipesService getRecipesService() {
+		return recipesService;
+	}
+
+	public void setRecipesService(RecipesService recipesService) {
+		this.recipesService = recipesService;
+	}
+
+	public Recipes getRecipes() {
+		return recipes;
+	}
+
+	public void setRecipes(Recipes recipes) {
+		this.recipes = recipes;
+	}
+
+	public String getFirstCateId() {
+		return firstCateId;
+	}
+
+	public void setFirstCateId(String firstCateId) {
+		this.firstCateId = firstCateId;
+	}
+
+	public String getFirstCateName() {
+		return firstCateName;
+	}
+
+	public void setFirstCateName(String firstCateName) {
+		this.firstCateName = firstCateName;
+	}
 
 }

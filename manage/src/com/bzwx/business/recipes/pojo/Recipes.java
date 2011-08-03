@@ -14,10 +14,10 @@ public class Recipes implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String firstCateId;// 非表字段
+	private Long firstCateId;// 非表字段
 	private String firstCateName;// 非表字段
 	private Long secCateId; // 非表字段
-	private Long secCateName; // 非表字段
+	private String secCateName; // 非表字段
 	private String allCateName; // 非表字段
 
 	private long recId; // 菜品主键
@@ -32,8 +32,48 @@ public class Recipes implements Serializable {
 
 	private int recVersion = 1; // 更新版本
 	private int recStatus = 0; // 菜品当前状态（-1删除；0，默认正常未同步；1，正常并已同步；2，过期无需同步；3，待上市稍后同步）
-	private Date creataDate; // 创建时间
+	private Date createDate; // 创建时间
 	private Date updateDate; // 最新修改时间
+
+	public Long getFirstCateId() {
+		return firstCateId;
+	}
+
+	public void setFirstCateId(Long firstCateId) {
+		this.firstCateId = firstCateId;
+	}
+
+	public String getFirstCateName() {
+		return firstCateName;
+	}
+
+	public void setFirstCateName(String firstCateName) {
+		this.firstCateName = firstCateName;
+	}
+
+	public Long getSecCateId() {
+		return secCateId;
+	}
+
+	public void setSecCateId(Long secCateId) {
+		this.secCateId = secCateId;
+	}
+
+	public String getSecCateName() {
+		return secCateName;
+	}
+
+	public void setSecCateName(String secCateName) {
+		this.secCateName = secCateName;
+	}
+
+	public String getAllCateName() {
+		return allCateName;
+	}
+
+	public void setAllCateName(String allCateName) {
+		this.allCateName = allCateName;
+	}
 
 	public long getRecId() {
 		return recId;
@@ -123,12 +163,13 @@ public class Recipes implements Serializable {
 		this.recStatus = recStatus;
 	}
 
-	public Date getCreataDate() {
-		return creataDate;
+
+	public Date getCreateDate() {
+		return createDate;
 	}
 
-	public void setCreataDate(Date creataDate) {
-		this.creataDate = creataDate;
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 
 	public Date getUpdateDate() {
@@ -137,50 +178,6 @@ public class Recipes implements Serializable {
 
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	public String getAllCateName() {
-		return allCateName;
-	}
-
-	public void setAllCateName(String allCateName) {
-		this.allCateName = allCateName;
-	}
-
-	public String getFirstCateId() {
-		return firstCateId;
-	}
-
-	public void setFirstCateId(String firstCateId) {
-		this.firstCateId = firstCateId;
-	}
-
-	public String getFirstCateName() {
-		return firstCateName;
-	}
-
-	public void setFirstCateName(String firstCateName) {
-		this.firstCateName = firstCateName;
-	}
-
-	public Long getSecCateId() {
-		return secCateId;
-	}
-
-	public void setSecCateId(Long secCateId) {
-		this.secCateId = secCateId;
-	}
-
-	public Long getSecCateName() {
-		return secCateName;
-	}
-
-	public void setSecCateName(Long secCateName) {
-		this.secCateName = secCateName;
 	}
 
 }

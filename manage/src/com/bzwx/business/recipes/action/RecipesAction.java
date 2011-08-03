@@ -35,12 +35,12 @@ import com.bzwx.business.recipes.service.RecipesService;
 @Namespace("/recipes")
 @Scope("prototype")
 @Results({ @Result(type = "json") })
-public class RecipesAction extends Struts2BaseAction implements IRecipesUpdate{
+public class RecipesAction extends Struts2BaseAction implements IRecipesUpdate {
 
 	private static final long serialVersionUID = 1L;
 	@Autowired
 	private RecipesService recipesService;
-	
+
 	HttpServletRequest request = ServletActionContext.getRequest();
 	HttpServletResponse response = ServletActionContext.getResponse();
 	// HttpSession session = ServletActionContext.getRequest().getSession();
@@ -99,6 +99,7 @@ public class RecipesAction extends Struts2BaseAction implements IRecipesUpdate{
 
 	/**
 	 * 条件查询 菜品信息 （更新 recStatus=0）
+	 * 
 	 * @return
 	 * @throws Exception
 	 */
@@ -169,10 +170,10 @@ public class RecipesAction extends Struts2BaseAction implements IRecipesUpdate{
 	@Override
 	public String getRecipesUpdate() {
 		// TODO Auto-generated method stub
-		
+
 		return null;
 	}
-	
+
 	// private File image;
 	// private String imageFileName;
 	//

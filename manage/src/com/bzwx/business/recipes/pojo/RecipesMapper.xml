@@ -22,19 +22,20 @@
 	<!-- <select id="getListForClinet" resultMap="RecipesMapLite"> </select> -->
 	<!-- 全字段Map - RecipesMap -->
 	<resultMap id="RecipesMap" type="recipes">
-		<result column="REC_ID" property="recId" />
-		<result column="REC_NAME" property="recName" />
-		<result column="REC_CODE" property="recCode" />
-		<result column="REC_PRICE" property="recPrice" />
-		<result column="REC_DISCOUNT_PRICE" property="recDiscountPrice" />
-		<result column="REC_PIC_URL" property="recPicUrl" />
-		<result column="REC_NOTE" property="recNote" />
-		<result column="REC_DESC" property="recDesc" />
-		<result column="SORT_FLAG" property="sortFlag" />
-		<result column="REC_VERSION" property="recVersion" />
-		<result column="REC_STATUS" property="recStatus" />
-		<result column="CREATE_DATE" property="creataDate" />
-		<result column="UPDATE_DATE" property="updateDate" />
+		<result column="REC_ID" property="recId" javaType="Long" />
+		<result column="REC_NAME" property="recName" javaType="String" />
+		<result column="REC_CODE" property="recCode" javaType="String" />
+		<result column="REC_PRICE" property="recPrice" javaType="Double" />
+		<result column="REC_DISCOUNT_PRICE" property="recDiscountPrice"
+			javaType="Double" />
+		<result column="REC_PIC_URL" property="recPicUrl" javaType="String" />
+		<result column="REC_NOTE" property="recNote" javaType="String" />
+		<result column="REC_DESC" property="recDesc" javaType="String" />
+		<result column="SORT_FLAG" property="sortFlag" javaType="Integer" />
+		<result column="REC_VERSION" property="recVersion" javaType="Integer" />
+		<result column="REC_STATUS" property="recStatus" javaType="Integer" />
+		<result column="CREATE_DATE" property="createDate" javaType="Date" />
+		<result column="UPDATE_DATE" property="updateDate" javaType="Date" />
 	</resultMap>
 
 	<insert id="insert" parameterType="Recipes">
@@ -45,7 +46,7 @@
 		values
 		(S_BZWX_BUSI_RECIPES_INFO.NEXTVAL,
 		#{recName},#{recCode},#{recPrice},#{recDiscountPrice},#{recPicUrl},#{recNote},#{recDesc},
-		#{sortFlag},#{recVersion},#{recStatus},#{creataDate},#{updateDate})
+		#{sortFlag},#{recVersion},#{recStatus},#{createDate},#{updateDate})
 	</insert>
 
 	<update id="update" parameterType="Recipes">
@@ -81,8 +82,8 @@
 			<if test="sortFlag!=null">
 				SORT_FLAG=#{sortFlag},
 			</if>
-			<if test="creataDate!=null">
-				CREATE_DATE=#{creataDate},
+			<if test="createDate!=null">
+				CREATE_DATE=#{createDate},
 			</if>
 			<if test="updateDate!=null">
 				UPDATE_DATE=#{updateDate},
@@ -192,7 +193,8 @@
 				OR REC_PRICE like CONCAT(CONCAT('%', #{searchKey}),'%')
 			</if>
 			<if test="searchKey!=null">
-				OR REC_DISCOUNT_PRICE like CONCAT(CONCAT('%', #{searchKey}),'%')
+				OR REC_DISCOUNT_PRICE like CONCAT(CONCAT('%',
+				#{searchKey}),'%')
 			</if>
 			<if test="searchKey!=null">
 				OR REC_NOTE like CONCAT(CONCAT('%', #{searchKey}),'%')
