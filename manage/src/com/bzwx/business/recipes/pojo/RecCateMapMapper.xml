@@ -36,6 +36,16 @@
 		select
 		from
 		bzwx_busi_recipes_info
+		where 0 =0
+		<if test="id!=null">
+			ID = #{id}
+		</if>
+		<if test="cateId!=null">
+			CATE_ID = #{cateId}
+		</if>
+		<if test="recId!=null">
+			REC_ID = #{recId}
+		</if>
 		order by SORT_FLAG desc
 	</select>
 

@@ -1,6 +1,5 @@
 package com.bzwx.business.recipes.action;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
@@ -10,7 +9,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -22,9 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import com.bzwx.base.Struts2BaseAction;
+import com.bzwx.business.IRecipesUpdate;
 import com.bzwx.business.recipes.pojo.Recipes;
 import com.bzwx.business.recipes.service.RecipesService;
-import com.opensymphony.xwork2.ActionContext;
 
 /**
  * com.bzwx.business.recipes.web.RecipesAction
@@ -37,7 +35,7 @@ import com.opensymphony.xwork2.ActionContext;
 @Namespace("/recipes")
 @Scope("prototype")
 @Results({ @Result(type = "json") })
-public class RecipesAction extends Struts2BaseAction {
+public class RecipesAction extends Struts2BaseAction implements IRecipesUpdate{
 
 	private static final long serialVersionUID = 1L;
 	@Autowired
@@ -166,6 +164,13 @@ public class RecipesAction extends Struts2BaseAction {
 
 	public Recipes getRecipes() {
 		return recipes;
+	}
+
+	@Override
+	public String getRecipesUpdate() {
+		// TODO Auto-generated method stub
+		
+		return null;
 	}
 	
 	// private File image;
