@@ -17,7 +17,7 @@
 				<td><input type="text" id="searchKey" name="searchKey"><input
 					type="button" value="模糊查询" onclick="searchByKey()" /> <input
 					type="button" onclick="clearSearchKey()" value="清除" /></td>
-				<td width="35%">&nbsp;</td>
+				<td width="10%">&nbsp;</td>
 				<td id="pagequerytable"></td>
 			</tr>
 

@@ -151,8 +151,35 @@ public class RecipesAction extends Struts2BaseAction implements IRecipesUpdate {
 	 * @throws Exception
 	 */
 	@JSON(serialize = false)
-	public void delete() throws Exception {
+	@Action(value = "deleteRecipes", results = { @Result(name = "recipesList", location = "/admin/recipes/recipesList.jsp") })
+	public String deleteById() throws Exception {
+		String recId = request.getParameter("recId");
+		if(null!= recId){
+			recipesService.delete(Long.valueOf(recId));
+		}
+		
+		
+		String beginNum = request.getParameter("beginNum") == null ? "1"
+				: request.getParameter("beginNum");
+		String endNum = request.getParameter("endNum") == null ? "10" : request
+				.getParameter("endNum");
+		String searchKey = request.getParameter("searchKey") == null ? ""
+				: request.getParameter("searchKey");
+		request.setAttribute("searchKey", searchKey);
 
+		searchKey = URLDecoder.decode(URLDecoder.decode(searchKey, "UTF-8"),
+				"UTF-8");
+
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("beginNum", beginNum);
+		map.put("endNum", endNum);
+		if (!"".equals(searchKey)) {
+			map.put("searchKey", searchKey);
+		}
+
+		pageList = recipesService.pageQuery(map);
+		
+		return "recipesList";
 	}
 
 	public List<Recipes> getList() {

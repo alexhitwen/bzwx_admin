@@ -24,7 +24,8 @@
 	<div style="height: 558px; border: 1px solid; overflow: scroll;"
 		align="left">
 		<br> <b>——||<a
-			href="${ctx}/recipes/pageQuery!pageQuery.action">菜品管理</a>||</b>
+			href="${ctx}/recipes/pageQuery!pageQuery.action">菜品首页</a>||——||<a
+			href="${ctx}/admin/recipes/recipesManage.jsp">新增菜品</a>||</b>
 		————————————————————————————————————<br>
 		<jsp:include page="/admin/common/pageQuery.jsp"></jsp:include>
 		<br>
@@ -58,7 +59,7 @@
 					<td valign="top"><s:property value="#recipes.recPrice" /></td>
 					<td valign="top"><s:property value="#recipes.recDiscountPrice" />
 					</td>
-					<td valign="top"><s:property value="#recipes.recPicUrl" /></td>
+					<td valign="top"><a href="${ctx}<s:property value="#recipes.recPicUrl"/>" target="_blank">预览</a></td>
 					<td valign="top"><s:property value="#recipes.recNote" /></td>
 					<td valign="top"><s:property value="#recipes.recDesc" /></td>
 					<td valign="top"><s:property value="#recipes.sortFlag" /></td>
@@ -66,17 +67,42 @@
 					<td valign="top"><s:property value="#recipes.recStatus" /></td>
 					<td valign="top"><s:property value="#recipes.createDate" /></td>
 					<td valign="top"><s:property value="#recipes.updateDate" /></td>
-					<td><a href="${ctx}/admin/recipes/recipesManage.jsp">修改</a> <a href="">删除</a></td>
+					<td><a
+						href="${ctx}/updateRecipes!getInfo.action?recId=<s:property value="#recipes.recId"/>">修改</a>
+						<a
+						href="${ctx}/recipes/deleteRecipes!deleteById.action?recId=<s:property value="#recipes.recId"/>">删除</a>
+					</td>
 				</tr>
 			</s:iterator>
 		</table>
 	</div>
 	<script type="text/javascript">
 		var searchKey = '<%=(String) request.getAttribute("searchKey")%>';
-		if(searchKey == "null"){
+		if (searchKey == "null") {
 			searchKey = "";
 		}
+		searchKey = encodeURI(encodeURI(searchKey));
 		$("#searchKey").val(decodeURI(decodeURI(searchKey)));
+
+		function updateItem(v) {
+			window.location.href = "${ctx}/updateRecipes!getInfo.action?recId="
+					+ v
+					+ "&beginNum="
+					+ beginNum
+					+ "&endNum="
+					+ endNum
+					+ "&searchKey=" + searchKey;
+		}
+		function deleteItem(v) {
+			alert(v);
+			window.location.href = "${ctx}/recipes/deleteRecipes!deleteById.action?recId="
+					+ v
+					+ "&beginNum="
+					+ beginNum
+					+ "&endNum="
+					+ endNum
+					+ "&searchKey=" + searchKey;
+		}
 
 		function pageQuery(beginNum, endNum) {
 			searchKey = $("#searchKey").val();
@@ -85,13 +111,13 @@
 					+ "&endNum="
 					+ endNum
 					+ "&searchKey="
-					+ encodeURI(encodeURI(searchKey));
+					+ searchKey;
 		}
 
 		function searchByKey() {
 			searchKey = $("#searchKey").val();
 			window.location.href = "${ctx}/recipes/pageQuery!pageQuery.action?searchKey="
-					+ encodeURI(encodeURI(searchKey));
+					+ searchKey;
 		}
 
 		function UrlEncode(str) {

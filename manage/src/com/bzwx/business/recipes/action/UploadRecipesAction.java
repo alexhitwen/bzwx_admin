@@ -4,8 +4,12 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bzwx.base.Struts2BaseAction;
@@ -53,9 +57,21 @@ public class UploadRecipesAction extends Struts2BaseAction {
 	private String imageContentType;
 
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
+	SimpleDateFormat longSdf = new SimpleDateFormat("yyyyMMddHHmmss");
 	@Autowired
 	private RecipesService recipesService;
+
+	HttpServletRequest request = ServletActionContext.getRequest();
+
+	@Action(value = "updateRecipes", results = { @Result(name = "recipesManage", location = "/admin/recipes/recipesManage.jsp") })
+	public String getInfo() {
+		String recId = request.getParameter("recId");
+		if (recId != null) {
+			recipes = new Recipes();
+			recipes = recipesService.getInfoById(Long.valueOf(recId));
+		}
+		return "recipesManage";
+	}
 
 	public String execute() throws Exception {
 
@@ -75,20 +91,30 @@ public class UploadRecipesAction extends Struts2BaseAction {
 		recipes.setSortFlag(Integer.valueOf(sortFlag));
 		recipes.setRecVersion(Integer.valueOf(recVersion));
 
-		String realpath = ServletActionContext.getServletContext().getRealPath(
-				"/upload");
+		if (null != recPicUrl && !"".equals(recPicUrl)) {
+			recipes.setRecPicUrl(recPicUrl);
+		} else {
+			String realpath = ServletActionContext.getServletContext().getRealPath(
+					"/upload");
+			System.out.println(realpath);
+			if (image != null) {
+				if (imageFileName != null) {
+					String extension = imageFileName.substring(imageFileName
+							.indexOf('.'));
+					String str = longSdf.format(new Date());
+					str += System.currentTimeMillis();
+					imageFileName = str + extension;
+				}
 
-		System.out.println(realpath);
+				File savefile = new File(new File(realpath), imageFileName);
+				if (!savefile.getParentFile().exists())
+					savefile.getParentFile().mkdirs();
+				FileUtils.copyFile(image, savefile);
+				ActionContext.getContext().put("message", "上传成功");
 
-		if (image != null) {
-			File savefile = new File(new File(realpath), imageFileName);
-			if (!savefile.getParentFile().exists())
-				savefile.getParentFile().mkdirs();
-			FileUtils.copyFile(image, savefile);
-			ActionContext.getContext().put("message", "上传成功");
-			recipes.setRecPicUrl("/upload" + imageFileName);
+				recipes.setRecPicUrl("/upload/" + imageFileName);
+			}
 		}
-
 		if (!"".equals(allCateName) && null != allCateName)
 			recipes.setAllCateName(allCateName);
 		if (!"".equals(firstCateId) && null != firstCateId)
@@ -100,7 +126,7 @@ public class UploadRecipesAction extends Struts2BaseAction {
 		if (!"".equals(secCateName) && null != secCateName)
 			recipes.setSecCateName(secCateName);
 
-		if ("".equals(recId)) {
+		if ("".equals(recId) || "自动分配".equals(recId)) {
 			recipes.setCreateDate(sdf.parse(createDate));
 			recipes.setUpdateDate(sdf.parse(updateDate));
 			recipesService.insert(recipes);

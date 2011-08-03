@@ -67,17 +67,11 @@
 			<if test="recPicUrl!=null">
 				REC_PIC_URL=#{recPicUrl},
 			</if>
-			<if test="recPicUrl!=null">
-				REC_PIC_URL=#{recPicUrl},
-			</if>
 			<if test="recNote!=null">
 				REC_NOTE=#{recNote},
 			</if>
 			<if test="recDesc!=null">
 				REC_DESC=#{recDesc},
-			</if>
-			<if test="sortFlag!=null">
-				SORT_FLAG=#{sortFlag},
 			</if>
 			<if test="sortFlag!=null">
 				SORT_FLAG=#{sortFlag},
@@ -95,13 +89,7 @@
 	<delete id="delete" parameterType="Long">
 		delete
 		bzwx_busi_recipes_info
-		where
-		<if test="recId!=null">
-			REC_ID = #{recId}
-		</if>
-		<if test="recId==null">
-			1 = 0
-		</if>
+		where REC_ID = #{recId}
 	</delete>
 
 	<delete id="deleteByIds" parameterType="String">

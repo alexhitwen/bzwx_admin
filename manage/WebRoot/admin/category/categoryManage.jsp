@@ -21,13 +21,16 @@
 
 	var parentId = '<%=parentId%>';
 	var cateId = '<%=cateId%>';
+	//alert(cateId);
+	//alert(parentId);
+	
 	if (null != parentId && "null" != parentId) {
 		var url = "${ctx}/category/category!getListByParentId.action?parentId="
 				+ parentId;
 	} else {
 		var url = "${ctx}/category/category!getAllList.action";
 	}
-
+	
 	$.post(url, function(jsonArrayData) {
 		$.each(jsonArrayData.list,
 				function(key, o) {
@@ -72,11 +75,17 @@
 <body>
 	<div style="height: 558px; border: 1px solid; overflow: scroll;"
 		align="left">
-		<br>
-		<b>——||<a href="${ctx }/admin/category/categoryManage.jsp">全局新增</a>||——————————————————————————<a
-			href="${ctx }/admin/category/categoryTreeList.jsp?parentId=<%=parentId%>">||返回||</a>
-		</b>———————<br>
-		<br>
+	
+		
+		<br><b>——||<a
+			href="${ctx}/admin/category/categoryTreeList.jsp">栏目首页</a>||——||<a
+			href="${ctx}/admin/category/categoryManage.jsp">新增栏目</a>||
+		—————————————————————<a
+			href="${ctx}/admin/category/categoryTreeList.jsp?parentId=<%=parentId%>">返回</a></b>||————————
+				<b id="currentUpdate"></b>
+		<br><br>
+		
+		
 		<div align="left">
 
 			<table style="margin-left: 200px">
