@@ -30,7 +30,7 @@
 						$.post(url, function(jsondata) {
 							//渲染左栏页面
 							renderingPage(jsondata);
-							//初始化所有栏目
+							//初始化所有分类
 							getChildList(parentId);
 
 						});
@@ -73,7 +73,7 @@
 						+ o.parentId + ")><font color=red>修改</font>"
 						+ "</a>  <a href=javascript:deleteItem(" + o.cateId
 						+ "," + o.parentId
-						+ ")><font color=red>删除</font></a>  <a href=javascript:deleteItem("
+						+ ")><font color=red>删除</font></a>  <a href=javascript:addRecToCate("
 								+ o.cateId+ "," + o.parentId + ")><font color=red><b>加菜<b></font></a></td>" + "</tr>");
 				$("#tabRight").append(tr);
 			});
@@ -84,11 +84,18 @@
 		window.location.href = "${ctx}/admin/category/categoryManage.jsp?parentId="
 				+ v;
 	}
+	function addRecToCate(v1,v2) {
+		window.location.href = "${ctx}/getRecListByCateId!getRecListByCateId.action?cateId="
+			+ v1 + "&parentId=" + v2;
+	}
 
 	function updateItem(v1, v2) {
+		//window.location.href = "${ctx}/getRecListByCateId!getRecListByCateId.action?cateId="
+			//	+ v1 + "&parentId=" + v2;
 		window.location.href = "${ctx}/admin/category/categoryManage.jsp?cateId="
-				+ v1 + "&parentId=" + v2;
+			+ v1 + "&parentId=" + v2;
 	}
+	
 
 	function deleteItem(v1, v2) {
 		window.location.href = "${ctx}/category/deleteAction!deleteById.action?cateId="
@@ -102,10 +109,10 @@
 		align="left">
 
 		<br> <b>——||<a
-			href="${ctx}/admin/category/categoryTreeList.jsp">栏目首页</a>||——||<a
-			href="${ctx}/admin/category/categoryManage.jsp">新增栏目</a>||
+			href="${ctx}/admin/category/categoryTreeList.jsp">分类首页</a>||——||<a
+			href="${ctx}/admin/category/categoryManage.jsp">新增分类</a>||
 			—————————————————————<a id="addItemTop"
-			href="javascript:insertItem(<%=parentId%>)">添加下级栏目</a> </b>||—— <b
+			href="javascript:insertItem(<%=parentId%>)">添加下级分类</a> </b>||—— <b
 			id="currentUpdate"></b> <br> <br>
 		<table id="tab1" width="100%" height="100%">
 			<tr>

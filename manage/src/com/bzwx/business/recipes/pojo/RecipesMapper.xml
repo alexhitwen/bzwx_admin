@@ -204,9 +204,6 @@
 		#{beginNum}
 	</select>
 
-
-
-
 	<resultMap id="RecipesCateMap" type="recipes">
 		<result column="REC_ID" property="recId" javaType="Long" />
 		<result column="REC_NAME" property="recName" javaType="String" />
@@ -216,37 +213,50 @@
 			javaType="Double" />
 		<result column="REC_PIC_URL" property="recPicUrl" javaType="String" />
 		<result column="REC_STATUS" property="recStatus" javaType="Integer" />
-		
-		<result column="CATE_ID" property="cateId" javaType="java.lang.Long" />
-		<result column="PARENT_ID" property="parentId" javaType="java.lang.Long" />
+
+		<result column="CATE_ID" property="cateId" javaType="Long" />
+		<result column="CATE_NAME" property="cateName" javaType="String" />
+		<result column="PARENT_ID" property="parentId" javaType="Long" />
 	</resultMap>
-	
-	<select id="getListByCateId" parameterType="Long" resultMap="RecipesCateMap">
+
+	<!-- Cause: org.apache.ibatis.reflection.ReflectionException: There is no 
+		getter for property named 'cateId' in 'class java.lang.Long' <select id="getRecListByCateId" 
+		parameterType="Long" resultMap="RecipesCateMap"> select t1.REC_ID,t1.REC_NAME,t1.REC_CODE,t1.REC_PRICE,t1.REC_DISCOUNT_PRICE, 
+		t1.REC_PIC_URL,t2.CATE_ID,t2.PARENT_ID, t1.SORT_FLAG,t1.REC_STATUS,t3.CATE_NAME,t3.REC_NAME 
+		from bzwx_busi_recipes_info t1 , BZWX_BUSI_REC_CATE_MAP t2 where 0 = 0 <if 
+		test="cateId!=null"> AND t1.CATE_ID = #{cateId} </if> <if test="cateId!=null"> 
+		AND t1.CATE_ID = t2.CATE_ID </if> <if test="parentId!=null"> AND PARENT_ID 
+		= #{parentId} </if> <if test="recId!=null"> AND REC_ID = #{recId} </if> <if 
+		test="recName!=null"> AND REC_NAME = #{recName} </if> <if test="recCode!=null"> 
+		AND REC_CODE = #{recCode} </if> order by SORT_FLAG desc </select> -->
+
+	<select id="getRecListByCateMap" parameterType="map" resultMap="RecipesCateMap">
 		select
 		t1.REC_ID,t1.REC_NAME,t1.REC_CODE,t1.REC_PRICE,t1.REC_DISCOUNT_PRICE,
 		t1.REC_PIC_URL,t2.CATE_ID,t2.PARENT_ID,
-		t1.REC_NOTE,t1.REC_DESC,
-		t1.SORT_FLAG,t1.REC_VERSION,t1.REC_STATUS,
-		t1.CREATE_DATE,t1.UPDATE_DATE
+		t1.SORT_FLAG,t1.REC_STATUS
 		from
 		bzwx_busi_recipes_info t1 , BZWX_BUSI_REC_CATE_MAP t2
-		where 0 = 0
-		<if test="cateId!=null">
-			AND CATE_ID = #{cateId}
-		</if>
-		<if test="parentId!=null">
-			AND PARENT_ID = #{parentId}
-		</if>
-		<if test="recId!=null">
-			AND REC_ID = #{recId}
-		</if>
-		<if test="recName!=null">
-			AND REC_NAME = #{recName}
-		</if>
-		<if test="recCode!=null">
-			AND REC_CODE = #{recCode}
-		</if>
+		<where>
+			<if test="cateId!=null">
+				AND T2.CATE_ID = #{cateId} AND T1.REC_ID = T2.REC_ID
+			</if>
+		</where>
 		order by SORT_FLAG desc
 	</select>
 
+	<select id="getRecListNoInCateByCateMap" parameterType="map"
+		resultMap="RecipesCateMap">
+		select * from BZWX_BUSI_RECIPES_INFO where REC_ID not in(
+		select
+		t1.REC_ID
+		from
+		BZWX_BUSI_RECIPES_INFO T1 , BZWX_BUSI_REC_CATE_MAP
+		T2
+		<if test="cateId!=null">
+			where 0 = 0 AND T2.CATE_ID = #{cateId} and T1.REC_ID =
+			T2.REC_ID)
+		</if>
+		order by SORT_FLAG desc
+	</select>
 </mapper>

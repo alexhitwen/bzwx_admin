@@ -20,20 +20,32 @@
 
 	<delete id="delete" parameterType="Long">
 		delete
-		bzwx_busi_recipes_info
+		BZWX_BUSI_REC_CATE_MAP
 		where REC_ID = #{recId}
+	</delete>
+
+	<delete id="deleteByMap" parameterType="map">
+		delete
+		BZWX_BUSI_REC_CATE_MAP
+		where
+		REC_ID = #{recId}
+		and CATE_ID =
+		#{cateId}
+		<if test="parentId!=null">
+			and PARENT_ID = #{parentId}
+		</if>
 	</delete>
 
 	<delete id="deleteByIds" parameterType="String">
 		delete
-		bzwx_busi_recipes_info
+		BZWX_BUSI_REC_CATE_MAP
 		where REC_ID in #{values}
 	</delete>
 
 	<select id="getListByMap" parameterType="map" resultMap="RecCateMap">
 		select
 		from
-		bzwx_busi_recipes_info
+		BZWX_BUSI_REC_CATE_MAP
 		where 0 =0
 		<if test="id!=null">
 			ID = #{id}
@@ -50,7 +62,7 @@
 		order by SORT_FLAG desc
 	</select>
 
-	<!-- 映射关系修改几乎用不到，基本是删除、新增 -->
+	<!-- 映射关系的修改几乎用不到，基本是删除、新增 -->
 	<update id="update" parameterType="map">
 		update BZWX_BUSI_REC_CATE_MAP
 		<set>
@@ -63,6 +75,5 @@
 		</set>
 		where REC_ID=#{recId}
 	</update>
-
 
 </mapper>

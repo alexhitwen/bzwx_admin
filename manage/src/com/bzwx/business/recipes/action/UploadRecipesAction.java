@@ -115,16 +115,17 @@ public class UploadRecipesAction extends Struts2BaseAction {
 				recipes.setRecPicUrl("/upload/" + imageFileName);
 			}
 		}
+		
 		if (!"".equals(allCateName) && null != allCateName)
 			recipes.setAllCateName(allCateName);
-		if (!"".equals(firstCateId) && null != firstCateId)
-			recipes.setFirstCateId(Long.valueOf(firstCateId));
-		if (!"".equals(firstCateName) && null != firstCateName)
-			recipes.setFirstCateName(firstCateName);
-		if (!"".equals(secCateId) && null != secCateId)
-			recipes.setSecCateId(Long.valueOf(secCateId));
-		if (!"".equals(secCateName) && null != secCateName)
-			recipes.setSecCateName(secCateName);
+//		if (!"".equals(firstCateId) && null != firstCateId)
+//			recipes.setFirstCateId(Long.valueOf(firstCateId));
+//		if (!"".equals(firstCateName) && null != firstCateName)
+//			recipes.setFirstCateName(firstCateName);
+//		if (!"".equals(secCateId) && null != secCateId)
+//			recipes.setSecCateId(Long.valueOf(secCateId));
+//		if (!"".equals(secCateName) && null != secCateName)
+//			recipes.setSecCateName(secCateName);
 
 		if ("".equals(recId) || "自动分配".equals(recId)) {
 			recipes.setCreateDate(sdf.parse(createDate));

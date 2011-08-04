@@ -63,7 +63,7 @@
 						<tr>
 							<td><a
 								href="javascript:debugInterface('${ctx}/category/category!getAllList.action')"><font
-									color=green>菜谱更新列表</font> </a></td>
+									color=green>菜谱更新对象</font> </a></td>
 						</tr>
 						<tr>
 							<td><a

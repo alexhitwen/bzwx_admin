@@ -6,12 +6,19 @@ import java.util.Map;
 import com.bzwx.base.IBatisBaseDao;
 import com.bzwx.business.recipes.pojo.RecCateMap;
 
-public class RecCateMapDaoImpl extends IBatisBaseDao<RecCateMap> {
+public class RecCateMapDaoImpl extends IBatisBaseDao<RecCateMap> implements
+		RecCateMapDao {
 
 	@Override
 	public void insert(RecCateMap o) {
 		getSqlSessionTemplate().insert(
 				"com.bzwx.business.recipes.pojo.RecCateMap.insert", o);
+	}
+
+	@Override
+	public void deleteByMap(Map<String, Object> map) {
+		getSqlSessionTemplate().delete(
+				"com.bzwx.business.recipes.pojo.RecCateMap.deleteByMap", map);
 	}
 
 	@Override

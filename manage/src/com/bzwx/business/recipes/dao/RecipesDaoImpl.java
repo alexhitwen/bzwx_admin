@@ -97,4 +97,22 @@ public class RecipesDaoImpl extends IBatisBaseDao<Recipes> implements
 		return list;
 	}
 
+	@Override
+	public List<Recipes> getRecListByCateId(Long cateId) {
+		List<Recipes> list = (this.getSqlSessionTemplate().selectList(
+				"com.bzwx.business.recipes.pojo.Recipes.getRecListByCateId", cateId));
+		return list;
+	}
+	
+	public List<Recipes> getRecListByCateMap(Map<String, Object> map) {
+		List<Recipes> list = (this.getSqlSessionTemplate().selectList(
+				"com.bzwx.business.recipes.pojo.Recipes.getRecListByCateMap", map));
+		return list;
+	}
+	public List<Recipes> getRecListNoInCateByCateMap(Map<String, Object> map) {
+		List<Recipes> list = (this.getSqlSessionTemplate().selectList(
+				"com.bzwx.business.recipes.pojo.Recipes.getRecListNoInCateByCateMap", map));
+		return list;
+	}
+
 }

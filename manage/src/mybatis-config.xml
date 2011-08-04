@@ -7,6 +7,7 @@
 			<typeAlias alias="user" type="com.test.model.User" /> -->
 		<typeAlias alias="Category" type="com.bzwx.business.category.pojo.Category" />
 		<typeAlias alias="Recipes" type="com.bzwx.business.recipes.pojo.Recipes" />
+		<typeAlias alias="RecCateMap" type="com.bzwx.business.recipes.pojo.RecCateMap" />
 
 	</typeAliases>
 
@@ -15,6 +16,7 @@
 		<!-- 若不配置使用自动扫描的方式 -->
 		<mapper resource="com/bzwx/business/category/pojo/CategoryMapper.xml" />
 		<mapper resource="com/bzwx/business/recipes/pojo/RecipesMapper.xml" />
+		<mapper resource="com/bzwx/business/recipes/pojo/RecCateMapMapper.xml" />
 	</mappers>
 
 </configuration>		

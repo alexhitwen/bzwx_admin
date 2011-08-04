@@ -63,7 +63,6 @@
 					</td>
 				</tr>
 				<tr style="height: 12px;">
-
 					<td><s:textfield name="recName" label="菜品名称（必须，限200字）"
 							value="%{recipes.recName}"></s:textfield>
 					</td>

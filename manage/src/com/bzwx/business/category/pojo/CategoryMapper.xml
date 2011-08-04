@@ -7,7 +7,7 @@
 		BZWX_BUSI_RECIPES_CATEGORY
 		(cate_id,parent_id,cate_name,cate_code,cate_value,cate_note,cate_desc,sort_flag,cate_status)
 		values
-		(S_BZWX_BUSI_CATEGORY_INFO.NEXTVAL,#{parentId},#{cateName},#{cateCode},#{cateValue},#{cateNote},#{cateDesc},#{sortFlag},#{cateStatus})
+		(S_BZWX_BUSI_RECIPES_CATEGORY.NEXTVAL,#{parentId},#{cateName},#{cateCode},#{cateValue},#{cateNote},#{cateDesc},#{sortFlag},#{cateStatus})
 	</insert>
 	<delete id="delete">
 		delete BZWX_BUSI_RECIPES_CATEGORY
@@ -79,6 +79,32 @@
 		sort_flag as sortFlag,cate_status as cateStatus
 		FROM
 		BZWX_BUSI_RECIPES_CATEGORY
+		order by sort_flag
+	</select>
+	<select id="getListByMap" resultType="Category" parameterType="map">
+		select cate_id as
+		cateId,parent_id as parentId,
+		cate_name as
+		cateName,cate_code as
+		cateCode,
+		cate_value as cateValue,cate_note as
+		cateNote,cate_desc
+		as
+		cateDesc,
+		sort_flag as sortFlag,cate_status as
+		cateStatus
+		FROM
+		BZWX_BUSI_RECIPES_CATEGORY
+		where 0 = 0
+		<if test="cateId!=null">
+			and cate_id = #{cate_id}
+		</if>
+		<if test="parentId!=null">
+			and parent_id = #{parentId}
+		</if>
+		<if test="cateCode!=null">
+			and cate_code = ${cateCode}
+		</if>
 		order by sort_flag
 	</select>
 	<select id="getListByValue" resultType="Category">

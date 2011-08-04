@@ -154,11 +154,10 @@ public class RecipesAction extends Struts2BaseAction implements IRecipesUpdate {
 	@Action(value = "deleteRecipes", results = { @Result(name = "recipesList", location = "/admin/recipes/recipesList.jsp") })
 	public String deleteById() throws Exception {
 		String recId = request.getParameter("recId");
-		if(null!= recId){
+		if (null != recId) {
 			recipesService.delete(Long.valueOf(recId));
 		}
-		
-		
+
 		String beginNum = request.getParameter("beginNum") == null ? "1"
 				: request.getParameter("beginNum");
 		String endNum = request.getParameter("endNum") == null ? "10" : request
@@ -178,7 +177,7 @@ public class RecipesAction extends Struts2BaseAction implements IRecipesUpdate {
 		}
 
 		pageList = recipesService.pageQuery(map);
-		
+
 		return "recipesList";
 	}
 

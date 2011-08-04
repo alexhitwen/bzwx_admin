@@ -1,6 +1,8 @@
 package com.bzwx.business.category.action;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +22,6 @@ import com.bzwx.business.category.pojo.Category;
 import com.bzwx.business.category.service.CategoryService;
 
 /**
- * 
  * com.bzwx.business.category.action.CategoryAction
  * 
  * @author wwh
@@ -44,64 +45,26 @@ public class CategoryAction extends Struts2BaseAction {
 	private Category category = null;
 
 	@JSON(serialize = false)
-	@Action(value = "categoryAction", results = { @Result(name = "categoryTreeList", location = "/admin/category/categoryTreeList.jsp") })
-	public String getTreeList() {
-		String cateId = request.getParameter("cateId");
-		String contextPath = request.getParameter("cateId");
-		String jsonTreeData = categoryService.getTreeStr(cateId, contextPath);
-		request.setAttribute("jsonTreeData", jsonTreeData);
-		return "categoryTreeList";
-	}
-
-	@Action(value = "insertOrUpdateAction", results = { @Result(name = "categoryTreeList", location = "/admin/category/categoryTreeList.jsp") })
-	public String insertOrUpdate() {
-		String cateId = request.getParameter("cateId");
-		category = new Category();
-		category.setCateCode(request.getParameter("cateCode"));
-		category.setCateDesc(request.getParameter("cateDesc"));
-		category.setCateName(request.getParameter("cateName"));
-		category.setCateNote(request.getParameter("cateNote"));
-		category.setCateStatus(Integer.valueOf(request
-				.getParameter("cateStatus") == null ? "0" : request
-				.getParameter("cateStatus")));
-		category.setCateValue(request.getParameter("cateValue"));
-		category.setParentId(Integer
-				.valueOf(request.getParameter("parentId") == null ? "0"
-						: request.getParameter("parentId")));
-		category.setSortFlag(Integer
-				.valueOf(request.getParameter("sortFlag") == null ? "0"
-						: request.getParameter("sortFlag")));
-		if (cateId == null || "".equals(cateId) || "0".equals(cateId)
-				|| "null".equals(cateId)) {
-			categoryService.insert(category);
-		} else {
-			category.setCateId(Integer.valueOf(cateId));
-			categoryService.update(category);
-		}
-		return "categoryTreeList";
-	}
-
-	@JSON(serialize = false)
 	public String getAllList() {
 		list = categoryService.getAllList();
 		return SUCCESS;
 	}
 
-	@Action(value = "deleteAction", results = { @Result(name = "categoryTreeList", location = "/admin/category/categoryTreeList.jsp") })
-	public String deleteById() {
+	@JSON(serialize = false)
+	public String getListByMap() {
 		String cateId = request.getParameter("cateId");
+		String parentId = request.getParameter("parentId");
+		String cateCode = request.getParameter("cateCode");
+		Map<String, Object> map = new HashMap<String, Object>();
+		if (null != cateId)
+			map.put("cateId", cateId);
+		if (null != parentId)
+			map.put("parentId", parentId);
+		if (null != cateCode)
+			map.put("cateCode", cateCode);
 
-		System.out.println(cateId);
-		if (null != cateId && !"".equals(cateId)) {
-			categoryService.delete(Long.valueOf(cateId));
-
-			category = new Category();
-			category.setCateId(Integer.valueOf(cateId));
-			category.setParentId(Integer.valueOf(request
-					.getParameter("parentId")));
-		}
-
-		return "categoryTreeList";
+		list = categoryService.getListByMap(map);
+		return SUCCESS;
 	}
 
 	@JSON(serialize = false)
@@ -144,6 +107,62 @@ public class CategoryAction extends Struts2BaseAction {
 		}
 		// request.setAttribute("category", category);
 		return SUCCESS;
+	}
+
+	// 业务跳转部分
+	@JSON(serialize = false)
+	@Action(value = "categoryAction", results = { @Result(name = "categoryTreeList", location = "/admin/category/categoryTreeList.jsp") })
+	public String getTreeList() {
+		String cateId = request.getParameter("cateId");
+		String contextPath = request.getParameter("cateId");
+		String jsonTreeData = categoryService.getTreeStr(cateId, contextPath);
+		request.setAttribute("jsonTreeData", jsonTreeData);
+		return "categoryTreeList";
+	}
+
+	@Action(value = "deleteAction", results = { @Result(name = "categoryTreeList", location = "/admin/category/categoryTreeList.jsp") })
+	public String deleteById() {
+		String cateId = request.getParameter("cateId");
+
+		System.out.println(cateId);
+		if (null != cateId && !"".equals(cateId)) {
+			categoryService.delete(Long.valueOf(cateId));
+
+			category = new Category();
+			category.setCateId(Integer.valueOf(cateId));
+			category.setParentId(Integer.valueOf(request
+					.getParameter("parentId")));
+		}
+
+		return "categoryTreeList";
+	}
+
+	@Action(value = "insertOrUpdateAction", results = { @Result(name = "categoryTreeList", location = "/admin/category/categoryTreeList.jsp") })
+	public String insertOrUpdate() {
+		String cateId = request.getParameter("cateId");
+		category = new Category();
+		category.setCateCode(request.getParameter("cateCode"));
+		category.setCateDesc(request.getParameter("cateDesc"));
+		category.setCateName(request.getParameter("cateName"));
+		category.setCateNote(request.getParameter("cateNote"));
+		category.setCateStatus(Integer.valueOf(request
+				.getParameter("cateStatus") == null ? "0" : request
+				.getParameter("cateStatus")));
+		category.setCateValue(request.getParameter("cateValue"));
+		category.setParentId(Integer
+				.valueOf(request.getParameter("parentId") == null ? "0"
+						: request.getParameter("parentId")));
+		category.setSortFlag(Integer
+				.valueOf(request.getParameter("sortFlag") == null ? "0"
+						: request.getParameter("sortFlag")));
+		if (cateId == null || "".equals(cateId) || "0".equals(cateId)
+				|| "null".equals(cateId)) {
+			categoryService.insert(category);
+		} else {
+			category.setCateId(Integer.valueOf(cateId));
+			categoryService.update(category);
+		}
+		return "categoryTreeList";
 	}
 
 	public List<Category> getList() {
