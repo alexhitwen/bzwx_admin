@@ -58,13 +58,13 @@
 							</tr>
 							<tr align="center">
 								<td><a
-									href="javascript:getCategoryManager('${ctx}/admin/recipes/recommendRecipesList.jsp')"><b><span style="red">*</span>推荐管理</b>
+									href="javascript:getCategoryManager('${ctx}/getRecListByCateId!getRecListByCateId.action?cateId=26&parentId=22')"><b><span style="red">*</span>推荐管理</b>
 								</a>
 								</td>
 							</tr>
 							<tr align="center">
 								<td><a
-									href="javascript:getCategoryManager('${ctx}/admin/recipes/discountRecipesList.jsp')"><b>*促销管理</b>
+									href="javascript:getCategoryManager('${ctx}/getRecListByCateId!getRecListByCateId.action?cateId=23&parentId=22')"><b>*促销管理</b>
 								</a></td>
 							</tr>
 							<tr align="center">

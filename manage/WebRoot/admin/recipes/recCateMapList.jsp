@@ -30,7 +30,8 @@
 	var urlst = "${ctx}/category/category!getListByMap.action?parentId=1"
 	$.post(urlst, function(jsonArrayData) {
 		$.each(jsonArrayData.list, function(key, o) {
-			if(cateId==o.cateId){
+			
+			if(parentId == o.cateId){
 				$("#cateSelectst")
 						.append(
 								"<option value='"+o.cateId+"' selected=selected>" + o.cateName
@@ -44,7 +45,7 @@
 			
 		});
 	});
-	var urled = "${ctx}/category/category!getListByMap.action?parentId=<%=cateId%>";
+	var urled = "${ctx}/category/category!getListByMap.action?parentId=<%=parentId%>";
 	$.post(urled, function(jsonArrayData) {
 		$.each(jsonArrayData.list, function(key, o) {
 			if(cateId==o.cateId){
@@ -95,7 +96,7 @@
 							</td>
 						</tr>
 						<tr valign="top" height="10%">
-							<td colspan="7" align="center">当前栏目菜品</td>
+							<td colspan="7" align="center">当前栏目<font color="red"><b>  <%=parentId%>--<%=cateId %>  </b></font>菜品</td>
 						</tr>
 						<tr valign="top" height="10%">
 							<td>菜品名称</td>
