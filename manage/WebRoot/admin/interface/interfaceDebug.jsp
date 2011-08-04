@@ -21,6 +21,7 @@
 	$(document).ready(function() {
 		showDataIframe = document.getElementById("showDataIframe");
 	});
+
 	function debugInterface(url) {
 		$("#url").html(
 				"——      <a href='"+url+"' target='blank'>" + url + "</a>");

@@ -32,6 +32,7 @@
 		#{cateStatus}
 		where cate_id = #{cateId}
 	</update>
+
 	<select id="getInfobyId" parameterType="long" resultType="Category">
 		select
 		cate_id as
@@ -104,6 +105,9 @@
 		</if>
 		<if test="cateCode!=null">
 			and cate_code = ${cateCode}
+		</if>
+		<if test="cate_status!=null">
+			and cate_status = ${cate_status}
 		</if>
 		order by sort_flag
 	</select>

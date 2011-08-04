@@ -84,7 +84,7 @@
 			href="${ctx}/recipes/pageQuery!pageQuery.action">回菜品首页</a>||</b>
 		————————————————————————————————————<br>
 		<table>
-			<tr>
+			<tr valign="top">
 
 				<td width="45%">
 					<table id="tab1" border="1">
@@ -136,7 +136,7 @@
 						</table>
 					</div></td>
 
-				<td width="10%" align="center"><b>&gt;&gt;</b><br> <br>
+				<td width="10%" align="center"><br><br><br><br><br><b>&gt;&gt;</b><br> <br>
 					<br> <b>&lt;&lt;</b></td>
 					
 				<td width="45%"><table id="tab2" border="1">
@@ -194,8 +194,8 @@
 					+ ((i - 1) * count + 1) + "," + (i * count) + ")'> " + i
 					+ " </a>";
 		}
-		$("#pagequerytable1").html(v);
-		$("#pagequerytable2").html(v);
+		//$("#pagequerytable1").html(v);
+		//$("#pagequerytable2").html(v);
 	</script>
 
 	<script type="text/javascript">
