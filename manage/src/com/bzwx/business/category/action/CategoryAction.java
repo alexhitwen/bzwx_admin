@@ -94,7 +94,6 @@ public class CategoryAction extends Struts2BaseAction {
 		if (null != cateId) {
 			category = categoryService.getInfoById(Long.valueOf(cateId.trim()));
 		}
-		// request.setAttribute("category", category);
 		return SUCCESS;
 	}
 
