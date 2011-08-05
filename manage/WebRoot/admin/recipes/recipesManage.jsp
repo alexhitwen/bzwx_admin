@@ -83,7 +83,7 @@
 					</td>
 				</tr>
 				<tr style="height: 12px;">
-					<td><s:file size="10" name="image" onchange="clearUrl()"></s:file></td>
+					<td><s:file size="10" name="image" onchange="clearUrl()" label="菜品图片"></s:file></td>
 				</tr>
 				
 				
